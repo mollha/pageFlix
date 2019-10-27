@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
 
 # set up application referencing the file
 app = Flask(__name__)
@@ -7,6 +7,8 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return render_template('index.html')
+
+# template inheritance
 
 
 if __name__ == "__main__":
