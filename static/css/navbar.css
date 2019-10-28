@@ -20,8 +20,8 @@ header .navbar{
 
 header .navbar .navbar-brand img{
     width: 200px;
-    padding-left: 5%;
-    padding-right: 5%;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 header .navbar .nav-item{
     background-color: white;
