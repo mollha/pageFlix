@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
-	$('form').on('submit', function(event) {
-
+	$('#form').on('submit', function(event) {
+		alert('hi');
 		$.ajax({
 			data : {
 				name : $('#nameInput').val(),

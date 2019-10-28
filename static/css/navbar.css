@@ -1,0 +1,40 @@
+header #mediaIcons{
+    background-color: #c95b7d;
+    position: fixed;
+    top: 0;
+    height: 15px;
+    left: 0;
+    width: 100%;
+}
+
+header .navbar{
+    top: 15px;
+    font-size: 16px;
+    background-color: rgba(255,255,255,0.7);
+    height: 80px;
+    box-shadow: 0 10px 2px -2px rgba(0,0,0,0.2);
+    text-align: center;
+    padding: 0;
+    position: fixed;
+}
+
+header .navbar .navbar-brand img{
+    width: 200px;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+header .navbar .nav-item{
+    background-color: white;
+}
+header .navbar .nav-link{
+    margin: 20px 15px;
+}
+
+
+header .navbar .navbar-toggler{
+    border:none;
+    margin: 10px;
+}
+header .navbar .navbar-toggler-icon{
+    padding: 20px;
+}
