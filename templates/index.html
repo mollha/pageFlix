@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    <title>My index page!</title>
+
 {% endblock %}
 
 
@@ -23,6 +23,5 @@
 	<div id="successAlert" class="alert alert-success" role="alert" style="display:none;"></div>
 	<div id="errorAlert" class="alert alert-danger" role="alert" style="display:none;"></div>
 </div>
-
-<script src="./static/javaScript/form.js"></script>
+<script src="{{ url_for('static', filename='javaScript/form.js') }}"></script>
 {% endblock %}
