@@ -11,16 +11,12 @@ def index():
 
 @app.route('/process', methods=['POST'])
 def process():
-    email = request.form['email']
     name = request.form['name']
-
-    if email and name:
+    if name:
         newName = name[::-1]
         return jsonify({'name': newName})
     else:
         return jsonify({'error': 'Missing data!'})
-
-# template inheritance
 
 
 if __name__ == "__main__":

@@ -3,6 +3,7 @@
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <script src="{{ url_for('static', filename='javaScript/form.js') }}"></script>
 {% endblock %}
 
 {% block background %}
@@ -23,6 +24,4 @@
     </form>
 </div>
 </div>
-
-<script src="{{ url_for('static', filename='javaScript/form.js') }}"></script>
 {% endblock %}
