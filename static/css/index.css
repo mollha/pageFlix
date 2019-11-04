@@ -9,6 +9,20 @@ body{
     z-index:-5;
 }
 
+#inputRow{
+    padding-left: 17%;
+}
+
+#refreshIcon:hover{
+    color: grey;
+}
+
+#formDesc{
+    font-size: 24px;
+    font-weight: bolder;
+    text-transform: uppercase;
+}
+
 #formWrapper{
     background: rgba(240,240,240,0.7);
     box-shadow: 0px 0px 5px 5px rgba(0,0,0,0.2);
@@ -23,7 +37,7 @@ body{
     border: 0px;
     padding-left: 10px;
     color: white;
-    min-height: 30px;
+    min-height: 60px;
     height: 12%;
     border-radius: 7px;
     margin-bottom: 20px;
@@ -39,7 +53,15 @@ body{
     border-radius: 5px;
     color: white;
     font-weight: bold;
-    padding: 5px 10px;
+    padding: 10px 20px;
     text-transform: uppercase;
     text-align: center;
+}
+
+#formSubmit:hover {
+    background-color: #9585f2;
+}
+
+#innerForm{
+     padding-top: 30%;
 }
