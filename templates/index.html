@@ -6,33 +6,38 @@
 {% endblock %}
 
 {% block background %}
-<img id="backgroundImg" src="{{ url_for('static', filename='images/books.png') }}" alt="Book shelves">
+<img id="backgroundImg" src="{{ url_for('static', filename='images/books.png') }}" alt="Library with books">
 {% endblock %}
 
 
 {% block body %}
 <div class="container d-flex justify-content-center">
-        <div id="formWrapper" class="col-lg-4 col-md-6 col-sm-8 col-xs-10 d-flex justify-content-center">
+    <div id="formWrapper" class="col-lg-4 col-md-6 col-sm-8 col-xs-10 d-flex justify-content-center">
+        <div class="row">
             <form id="form">
                 <div id="innerForm">
-                    <div id="bannerRow" class="row justify-content-center">
-                        <p id="formDesc">Enter a User ID</p>
+                <div id="bannerRow" class="row justify-content-center">
+                    <p id="formDesc">Enter a User ID</p>
+                </div>
+                <br>
+                <div class="row">
+                    <div id="inputRow" class="col-11 text-center">
+                        <input id="userInput" type="text" name="userID" placeholder="User ID">
                     </div>
-                    <br>
-                    <div class="row">
-                        <div id="inputRow" class="col-10">
-                            <input id="userInput" type="text" name="userID" placeholder="User ID">
-                        </div>
-                        <div class="col-2">
-                            <i id="refreshIcon" class="fas fa-sync-alt"></i>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row justify-content-center">
-                        <button id="formSubmit" type="submit">Submit</button>
+                    <div class="refreshcol col-1">
+                        <i id="refreshIcon" title="Randomly generate valid user ID" class="fas fa-sync-alt"></i>
                     </div>
                 </div>
+                <div class="row justify-content-center">
+                    <p id="feedback_message">This will eventually provide feedback so that the user knows how to provide ID</p>
+                </div>
+                <br>
+                <div class="row justify-content-center">
+                    <button id="formSubmit" type="submit">Submit</button>
+                </div>
+            </div>
             </form>
-</div>
+        </div>
     </div>
+</div>
 {% endblock %}
