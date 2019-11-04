@@ -4,7 +4,7 @@ from random import choice
 # set up application referencing the file
 app = Flask(__name__)
 
-users = ['mollcool', 'yaycool', 'yamomisahoe', 'stefan']
+users = ['mol', 'mollcool', 'yaycool', 'yamomisahoe', 'stefan']
 
 @app.route('/')
 def index():
@@ -22,8 +22,9 @@ def signup():
 
 @app.route('/checkuser', methods=['POST'])
 def checkUser():
-    userID = request.form['userID'].strip()
-    if userID in users:
+    user_id = request.form['userID'].strip()
+    print(user_id)
+    if user_id in users:
         return 'True'
     return ''
 
