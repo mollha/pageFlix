@@ -8,7 +8,7 @@ $(document).ready(function() {
 			url : '/createuser',
             success: function(response){
 			    alert(response);
-			    $("#titlebox").text(response);
+			    $(".#titlebox").text(response);
             }
 		});
 		event.preventDefault(); // HTML automatically tries to post the form, we therefore manually stop this

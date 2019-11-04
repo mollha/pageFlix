@@ -20,6 +20,12 @@ def signup():
     print('hi')
     return render_template('signup.html')
 
+@app.route('/checkuser', methods=['POST'])
+def checkUser():
+    userID = request.form['userID'].strip()
+    if userID in users:
+        return 'True'
+    return ''
 
 @app.route('/createuser', methods=['POST'])
 def createUser():
@@ -30,7 +36,7 @@ def createUser():
     print('Users', users)
     return 'True'
 
-@app.route('/view')
+@app.route('/welcome')
 def view():
     return render_template('recommender_view.html')
 # This should do something better with the received data

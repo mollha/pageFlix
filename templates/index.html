@@ -2,7 +2,6 @@
 
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
     <script src="{{ url_for('static', filename='javaScript/index.js') }}"></script>
 {% endblock %}
 
@@ -22,7 +21,7 @@
                     <br>
                     <div class="row">
                         <div id="inputRow" class="col-10">
-                            <input id="userInput" type="text" name="userID" placeholder="User ID">
+                            <input class="specialSelect" id="userInput" type="text" name="userID" placeholder="User ID">
                         </div>
                         <div class="col-2">
                             <i id="refreshIcon" class="fas fa-sync-alt"></i>

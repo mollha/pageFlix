@@ -13,6 +13,11 @@ body{
     padding-left: 17%;
 }
 
+#refreshIcon{
+    padding-top: 20px;
+    height: 100px;
+}
+
 #refreshIcon:hover{
     color: grey;
 }
