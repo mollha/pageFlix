@@ -7,13 +7,12 @@ for index, line in enumerate(file):
     if not index:
         y.write(line)
         continue
-    elif index < 200:
+    elif index <= 100:
         comma_index = line.find(',')
         book_ids.append(line[0:comma_index])
         y.write(line)
     else:
         break
-
 
 r = open('ratings.csv', 'r', encoding="mbcs")
 open('clean_ratings.csv', 'w', encoding='mbcs').close()
@@ -27,7 +26,6 @@ for index, line in enumerate(r):
     comma_2_index = comma_1_index + 1 + line[comma_1_index + 1:].find(',')
     user_id = line[0:comma_1_index]
     # print('user id 1', user_id)
-
 
     book_id = line[comma_1_index + 1:comma_2_index]
     rating = line[comma_2_index + 1:]
