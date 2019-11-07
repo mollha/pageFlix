@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/recommender_view.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
-    <script src="{{ url_for('static', filename='javaScript/form.js') }}"></script>
+    <script src="{{ url_for('static', filename='javaScript/rating.js') }}"></script>
 {% endblock %}
 
 {% block background %}
@@ -12,5 +12,47 @@
 
 
 {% block body %}
+<div class="page d-flex justify-content-center">
+    <div class="col-7">
+        <div id="outerWrapper" class="container">
+        <div class="row">
+            <h1>Tell us what you like ...</h1>
+        </div>
+        <div class="row">
+            <div class="col-4 d-flex justify-content-center">
+                <div class="img-border">
+                <img class="book-img"src="https://images.gr-assets.com/books/1361039443m/41865.jpg">
+            </div>
+            </div>
+            <div class="col-4 d-flex justify-content-center">
+            <div class="img-border">
+                <img class="book-img"src="https://images.gr-assets.com/books/1361975680m/2657.jpg">
+            </div>
+        </div>
+            <div class="col-4 d-flex justify-content-center">
+            <div class="img-border">
+                <img class="book-img" src="https://images.gr-assets.com/books/1360206420m/11870085.jpg">
+            </div>
+        </div>
+        </div>
+        <form>
+            <br>
+            <div id="input_row" class="row">
+            <div class="col-4 d-flex justify-content-center">
+                <input maxlength="1" class="rating-input" name="rating">
+            </div>
+            <div class="col-4 d-flex justify-content-center">
+                <input maxlength="1"class="rating-input" name="rating">
+            </div>
+            <div class="col-4 d-flex justify-content-center">
+                <input maxlength="1"class="rating-input" name="rating">
+            </div>
+            </div>
+        </form>
+    </div>
+    </div>
+    <div class="col-5">
+    </div>
+</div>
 
 {% endblock %}
