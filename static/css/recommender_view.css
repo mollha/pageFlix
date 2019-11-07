@@ -24,14 +24,15 @@ body{
 }
 
 .img-border{
-    width: 60%;
+    width: 50.5%;
     background-color: #f7f7f7;
     box-shadow: 0 0 5px 5px rgba(0,0,0,0.2);
 }
 
 .book-img{
+    max-width: 98%;
+    min-height: 100%;
     filter: grayscale(40%);
-    min-height: 160px;
 }
 
 .book-img:hover{
@@ -40,12 +41,14 @@ body{
 
 .img-border:hover{
     background-color: white;
-    width: 61%;
+    width: 51%;
     cursor: pointer;
 }
 
 .book-img{
     min-width: 50%;
+    background-color: #669999;
+    padding-right:2%;
 }
 
 .rating-input{
