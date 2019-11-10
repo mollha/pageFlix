@@ -5,6 +5,7 @@ header #mediaIcons{
     height: 15px;
     left: 0;
     width: 100%;
+    z-index: 5;
 }
 
 header .navbar{

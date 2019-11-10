@@ -5,14 +5,10 @@
     <script src="{{ url_for('static', filename='javaScript/index.js') }}"></script>
 {% endblock %}
 
-{% block background %}
-<img id="backgroundImg" src="{{ url_for('static', filename='images/books.png') }}" alt="Library with books">
-{% endblock %}
-
-
 {% block body %}
 <div class="container d-flex justify-content-center">
-    <div class="col-9">
+    <div class="row d-flex justify-content-center">
+            <div class="col-md-8 col-lg-9">
         <div id="formWrapper" class="col-lg-4 col-md-6 col-sm-8 col-xs-10 d-flex justify-content-center">
         <div class="row">
             <form id="form">
@@ -26,7 +22,7 @@
                         <input id="userInput" type="text" name="userID" placeholder="User ID">
                     </div>
                     <div class="refreshcol col-1">
-                        <i id="refreshIcon" title="Randomly generate valid user ID" class="fas fa-sync-alt"></i>
+                        <i id="refreshIcon" title="Randomly generate valid user id" class="fas fa-sync-alt"></i>
                     </div>
                 </div>
                 <div class="row justify-content-center">
@@ -41,22 +37,23 @@
         </div>
     </div>
     </div>
-    <div class="col-3">
-        <div id="tips-wrapper">
-            <div class="row" id="tips-opt-1">
-                <div class="tip">
-                    <i class="fas fa-circle fa-stack-2x"></i>
-                    <strong class="fa-stack-1x circle-text">1</strong>
-                    <p>Enter an existing user id</p>
-                    <strong>OR</strong>
-                </div>
-                <div class="tip">
-                    <i class="fas fa-circle fa-stack-2x"></i>
-                    <strong class="fa-stack-1x circle-text">2</strong>
-                    <p>Select the refresh icon to randomly generate a valid user id</p>
+            <div class="col-md-4 col-lg-3">
+                <div id="tips-wrapper">
+                    <div class="row" id="tips-opt-1">
+                        <div class="tip">
+                            <i class="fas fa-circle fa-stack-2x"></i>
+                            <strong class="fa-stack-1x circle-text">1</strong>
+                            <p>Enter an existing user id</p>
+                            <strong>OR</strong>
+                        </div>
+                        <div class="tip">
+                            <i class="fas fa-circle fa-stack-2x"></i>
+                            <strong class="fa-stack-1x circle-text">2</strong>
+                            <p>Select the refresh icon to randomly generate a valid user id</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
     </div>
 </div>
 {% endblock %}

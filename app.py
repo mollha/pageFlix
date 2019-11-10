@@ -5,8 +5,9 @@ from Recommender import Recommender
 # set up application referencing the file
 app = Flask(__name__)
 
-recommender = Recommender("./Dataset/dataset/clean_ratings.csv", "./Dataset/dataset/clean_books.csv")
-users = recommender.get_users()
+# recommender = Recommender("./Dataset/dataset/clean_ratings.csv", "./Dataset/dataset/clean_books.csv")
+#users = recommender.get_users()
+users = ['mol', 'matt']
 
 @app.route('/')
 def index():
@@ -54,6 +55,34 @@ def process():
 @app.route('/getuser', methods=['GET'])
 def getUser():
     return choice(users)
+
+@app.route('/getbook', methods=['GET'])
+def get_book():
+    book_title = request.args.get('book_name')
+    # need to get book from its title
+    book_title = 'example'.title()
+
+    return jsonify(title=book_title,
+                   year='2000',
+                   authors='molly',
+                   genres='Horror',
+                   image_path='https://images.gr-assets.com/books/1303390735m/960.jpg')
+
+
+@app.route('/updaterating', methods=['POST'])
+def update_rating():
+    rating = request.form['rating']
+    try:
+        rating = int(rating)
+    except ValueError as e:
+        return 'Rating must be a number from 1 to 5'
+
+    if rating > 5 or rating < 1:
+        return 'Rating must be a number from 1 to 5'
+    # if the rating is not a number, return 'not valid'
+
+    return ''
+
 
 if __name__ == "__main__":
     app.run(debug=True)
