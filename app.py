@@ -60,11 +60,11 @@ def getUser():
 def get_book():
     book_title = request.args.get('book_name')
     # need to get book from its title
-    book_title = 'example'.title()
+    book_title = 'angels and demons'.title()
 
     return jsonify(title=book_title,
                    year='2000',
-                   authors='molly',
+                   authors='Dan Brown',
                    genres='Horror',
                    image_path='https://images.gr-assets.com/books/1303390735m/960.jpg')
 
