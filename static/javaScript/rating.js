@@ -128,5 +128,5 @@ $(document).ready(function() {
         });
     });
 
-
+    get_random_book('1');
 });
