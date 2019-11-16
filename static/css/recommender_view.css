@@ -94,6 +94,9 @@ body{
     text-align: center;
     font-weight: bold;
     min-height: 50px;
+    min-width: 100%;
+    max-width: 100%;
+    margin: 2% 0;
     font-size: 14px;
     word-wrap: normal;
     padding-bottom: 10px;
@@ -231,4 +234,6 @@ body{
 #special-book-row{
     min-height: 180px;
     max-height: 180px;
+    min-width: 100%;
+    margin: 0;
 }
