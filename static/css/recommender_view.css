@@ -22,7 +22,6 @@ body{
     box-shadow: 0 0 5px 5px rgba(0,0,0,0.2);
     min-width: 60%;
     margin-top: 20px;
-    padding-bottom: 5%;
     padding-top: 5%;
 }
 
@@ -37,8 +36,10 @@ body{
 
 
 .img-border{
-    width: 60%;
-    height: 90%;
+    max-width: 60%;
+    max-height: 70%;
+    margin-top: 10%;
+    min-width: 60%;
     background-image: url("../images/img_border.jpg");
     background-size: 100%;
     filter: grayscale(20%);
@@ -47,6 +48,8 @@ body{
 
 .book-img{
     width:92%;
+    background-color: white;
+    padding-right:2%;
     height: 100%;
     filter: grayscale(20%);
 }
@@ -58,12 +61,6 @@ body{
 .img-border:hover{
     filter: grayscale(0%);
     cursor: pointer;
-}
-
-.book-img{
-    min-width: 50%;
-    background-color: white;
-    padding-right:2%;
 }
 
 .rating-input, #search-input{
@@ -91,11 +88,15 @@ body{
 }
 
 #outerWrapper h1{
-    font-weight: bold;
-    font-size: 18px;
-    word-wrap: normal;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    padding-bottom: 4%;
+    font-weight: bold;
+    min-height: 50px;
+    font-size: 14px;
+    word-wrap: normal;
+    padding-bottom: 10px;
 }
 
 #title_row{
@@ -106,6 +107,10 @@ body{
     margin-bottom: 5%;
     margin-top: 0;
     color: white;
+}
+
+#year_p, #author_p, #genre_p{
+    font-size: 12px;
 }
 
 #refreshIcon, #submit-circle{
@@ -221,4 +226,9 @@ body{
     min-width: 80%;
     margin: 1% auto;
     background:linear-gradient(to bottom, white 0%, whitesmoke 100%);
+}
+
+#special-book-row{
+    min-height: 180px;
+    max-height: 180px;
 }

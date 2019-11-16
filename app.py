@@ -3,11 +3,9 @@ from random import choice
 from Recommender import Recommender
 
 # set up application referencing the file
+recommender = Recommender("./Dataset/dataset/cleaner_ratings.csv", "./Dataset/dataset/clean_books.csv")
+print('Finished intializing Recommender')
 app = Flask(__name__)
-
-# recommender = Recommender("./Dataset/dataset/clean_ratings.csv", "./Dataset/dataset/clean_books.csv")
-#users = recommender.get_users()
-users = ['mol', 'matt']
 
 @app.route('/')
 def index():
@@ -33,6 +31,7 @@ def checkUser():
 
 @app.route('/createuser', methods=['POST'])
 def createUser():
+    users = recommender.get_all_users()
     userID = request.form['userID'].strip()
     if userID in users:
         return 'False'
@@ -58,7 +57,26 @@ def process():
 
 @app.route('/getuser', methods=['GET'])
 def getUser():
-    return choice(users)
+    users = recommender.get_all_users()
+    return str(choice(users))
+
+@app.route('/randombook', methods=['GET'])
+def getRandomBook():
+    user_id = request.args.get('user_id')
+    book = recommender.get_unrated_book(int(user_id))
+    genres = book[6].split('|')
+    if len(genres) > 3:
+        genres = ', '.join(genres[0:3])
+    else:
+        genres = ', '.join(genres)
+
+    print(book)
+    return jsonify(title=book[3],
+                   year=book[2],
+                   authors=book[1],
+                   genres=genres,
+                   image_path=book[5])
+
 
 @app.route('/getbook', methods=['GET'])
 def get_book():

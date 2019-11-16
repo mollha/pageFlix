@@ -15,7 +15,7 @@ for index, line in enumerate(file):
     # print('index', index)
     # print('user id 2', user_id)
     int_user = int(user_id)
-    user_id = int_user // 4
+    user_id = int_user // 8
 
     if user_id in user_dict:
         tuple_list = user_dict[user_id]

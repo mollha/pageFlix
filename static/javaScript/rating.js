@@ -14,6 +14,31 @@ $(document).ready(function() {
     }
 
 
+    function get_random_book(user_id){
+        $.ajax({
+			type : 'GET',
+			url : '/randombook',
+            data: {
+                user_id: user_id
+            },
+            contenttype: "application/json",
+			success: function(response){
+			    current_book = response;
+			    let year = '<strong>Year: </strong>' + Math.round(parseInt(response.year)).toString();
+			    document.getElementById('title_h1').innerHTML = response.title;
+                document.getElementById('year_p').innerHTML = year;
+                document.getElementById('author_p').innerHTML = '<strong>Author: </strong>' + response.authors;
+                document.getElementById('genre_p').innerHTML = '<strong>Genre: </strong>' + response.genres;
+                $('.img-border .book-img').attr("src", response.image_path);
+            }
+		});
+    }
+
+    $('#refreshIcon').on('click', function(event){
+        get_random_book('0');
+    });
+
+
     function get_book(book_name){
         book_name = book_name || "hello";
         // Need to get a book from its title
@@ -26,7 +51,6 @@ $(document).ready(function() {
             contenttype: "application/json",
 			success: function(response){
 			    current_book = response;
-			    console.log(response);
 			    let year = 'Year: ' + Math.round(parseInt(response.year)).toString();
 			    document.getElementById('title_h1').innerHTML = response.title;
                 document.getElementById('year_p').innerHTML = year;
@@ -45,14 +69,14 @@ $(document).ready(function() {
 	});
 
 
-    $('#refreshIcon').on('click', function(event){
-        rating_box.css("box-shadow", 'None');
-        document.getElementById('rating-feedback').innerHTML = '';
-        // Need to get a new book
-        // [author, year, title...
-        rating_box.val('');
-        get_book('');
-    });
+    // $('#refreshIcon').on('click', function(event){
+    //     rating_box.css("box-shadow", 'None');
+    //     document.getElementById('rating-feedback').innerHTML = '';
+    //     // Need to get a new book
+    //     // [author, year, title...
+    //     rating_box.val('');
+    //     get_book('');
+    // });
 
 
     rating_box.on('change', function(event){
