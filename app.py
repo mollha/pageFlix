@@ -4,7 +4,7 @@ from Recommender import Recommender
 
 # set up application referencing the file
 recommender = Recommender("./Dataset/dataset/cleaner_ratings.csv", "./Dataset/dataset/clean_books.csv")
-print('Finished intializing Recommender')
+print('Finished intializing Recommender\n')
 app = Flask(__name__)
 
 @app.route('/')
@@ -18,13 +18,11 @@ def login():
 
 @app.route('/signup')
 def signup():
-    print('hi')
     return render_template('signup.html')
 
 @app.route('/checkuser', methods=['POST'])
 def checkUser():
     user_id = request.form['userID'].strip()
-    print(user_id)
     if user_id in users:
         return 'True'
     return ''
@@ -36,7 +34,6 @@ def createUser():
     if userID in users:
         return 'False'
     users.append(userID)
-    print('Users', users)
     return 'True'
 
 @app.route('/faq')
@@ -70,7 +67,6 @@ def getRandomBook():
     else:
         genres = ', '.join(genres)
 
-    print(book)
     return jsonify(title=book[3],
                    year=book[2],
                    authors=book[1],

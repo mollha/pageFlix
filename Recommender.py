@@ -4,6 +4,7 @@ from surprise import SVD, Reader, Dataset
 
 class Recommender:
     def __init__(self, ratings_path: str, books_path: str):
+        print('Initializing Recommender...')
         self.ratings = pd.read_csv(ratings_path)
         self.books = pd.read_csv(books_path)
         self.predictions = self.renew_predictions()

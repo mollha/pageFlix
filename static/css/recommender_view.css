@@ -84,6 +84,7 @@ body{
     background-color: slategrey;
     margin-top: 20px;
     padding: 5%;
+    min-height: 464px;
     box-shadow: 0 0 3px 3px rgba(0,0,0,0.2);
 }
 
@@ -218,8 +219,8 @@ body{
     padding-top: 5%;
     overflow-y: auto;
     overflow-x: hidden;
-    min-height: 418px;
-    max-height: 418px;
+    min-height: 461px;
+    max-height: 461px;
 }
 
 .already-rated-book{
