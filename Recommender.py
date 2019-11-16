@@ -12,7 +12,7 @@ class Recommender:
         self.predictions_dataframe = None
 
         self.update_predictions()
-        self.delete_user(1)
+        self.edit_ratings(1, self.ratings)
         self.update_predictions()
 
 
@@ -48,12 +48,14 @@ class Recommender:
         rating_values = self.dataframe.values
         user_ratings_mean = np.mean(rating_values, axis=1)
         r_demeaned = rating_values - user_ratings_mean.reshape(-1, 1)
+        r_demeaned = self.dataframe.sub(self.dataframe.mean(axis=1), axis=0)
+        # print(r_demeaned.head())
         # Singular Value Decomposition on ratings
         u, sigma, vt = svd(r_demeaned, full_matrices=False)
         sigma = np.diag(sigma)
         all_user_predicted_ratings = np.dot(np.dot(u, sigma), vt) + user_ratings_mean.reshape(-1, 1)
         self.predictions_dataframe = pd.DataFrame(all_user_predicted_ratings, columns=self.dataframe.columns)
-
+        print(self.predictions_dataframe)
 
     def get_recommendations(self, user_id: int, num_recommendations: int):
         user_row_number = list(self.dataframe.index).index(user_id)
@@ -68,3 +70,7 @@ class Recommender:
                            sort_values('Predictions', ascending=False)
                            .iloc[:num_recommendations, :-1])
         return already_rated, recommendations
+
+
+if __name__ == '__main__':
+    recommender = Recommender("./Dataset/dataset/clean_ratings.csv", "./Dataset/dataset/clean_books.csv")

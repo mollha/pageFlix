@@ -7,7 +7,7 @@ for index, line in enumerate(file):
     if not index:
         y.write(line)
         continue
-    elif index <= 100:
+    elif index <= 20:
         comma_index = line.find(',')
         book_ids.append(line[0:comma_index])
         y.write(line)

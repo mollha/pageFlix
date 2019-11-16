@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/signup.css') }}">
     <script src="{{ url_for('static', filename='javaScript/signUpForm.js') }}"></script>
 {% endblock %}
 
@@ -12,5 +12,32 @@
 
 {% block body %}
 <div class="container d-flex justify-content-center">
+    <div class="row d-flex justify-content-center">
+        <div class="col d-flex justify-content-center">
+        <div id="formWrapper" class="col-lg-4 col-md-6 col-sm-8 col-xs-10 d-flex justify-content-center">
+        <div class="row">
+                <div id="innerForm">
+                <div id="bannerRow" class="row justify-content-center">
+                    <p id="formDesc">Sign up with your new User ID!</p>
+                </div>
+                <br>
+                <div class="row">
+                    <div id="inputRow" class="col text-center">
+                        <input id="userInput" type="text" readonly name="userID" placeholder="User ID">
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <p id="feedback_message">Select continue to create this new user and view their ratings dashboard</p>
+                </div>
+                <br>
+                <div class="row justify-content-center">
+                    <a id="formSubmit">Continue</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
 </div>
+
 {% endblock %}

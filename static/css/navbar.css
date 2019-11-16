@@ -31,6 +31,16 @@ header .navbar .nav-link{
     margin: 20px 15px;
 }
 
+header .navbar .help-class{
+    background-color: #a1a1ff;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+header .navbar .help-class:hover {
+    cursor: pointer;
+    background-color: #bdbdff;
+}
 
 header .navbar .navbar-toggler{
     border:none;

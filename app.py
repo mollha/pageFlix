@@ -40,6 +40,10 @@ def createUser():
     print('Users', users)
     return 'True'
 
+@app.route('/faq')
+def faq():
+    return render_template('faq.html')
+
 @app.route('/welcome')
 def view():
     return render_template('recommender_view.html')

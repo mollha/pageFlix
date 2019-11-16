@@ -1,0 +1,18 @@
+body{
+    font-family: 'Roboto Mono', monospace;
+    background-image: url("../images/bulb.jpeg");
+    background-size: cover;
+    background-clip: initial;
+    z-index:2;
+    position: absolute;
+    top: 0;
+    left:0;
+    min-width: 100%;
+}
+
+.main-wrap{
+    min-width: 80%;
+    min-height: 300px;
+    background: rgba(240,240,240,0.7);
+    margin-top: 200px;
+}

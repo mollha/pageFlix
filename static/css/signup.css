@@ -1,0 +1,84 @@
+body{
+    font-family: 'Roboto Mono', monospace;
+    background-image: url("../images/cupcomp.jpg");
+    background-size: cover;
+    background-repeat: repeat;
+    z-index:2;
+    position: absolute;
+    top: 0;
+    left:0;
+    min-width: 100%;
+}
+
+#inputRow{
+    width: 95%;
+}
+
+#formDesc{
+    font-size: 24px;
+    font-weight: bolder;
+    margin: auto 0;
+    color: #424a54;
+    text-transform: uppercase;
+}
+#formDesc:hover{
+    cursor: default;
+}
+
+#formWrapper{
+    background: rgba(240,240,240,0.7);
+    box-shadow: 0 0 5px 5px rgba(0,0,0,0.2);
+    min-width: 90%;
+    margin: 180px 0 auto;
+    padding: 10%;
+}
+#userInput{
+    background: rgba(0,0,0,0.3);
+    border: 0;
+    padding-left: 10px;
+    color: white;
+    font-weight: bold;
+    min-height: 60px;
+    border-radius: 7px;
+    min-width: 90%;
+    text-align: center;
+}
+
+#userInput:hover{
+    cursor: default;
+}
+
+#userInput::placeholder{
+    color: white;
+}
+
+#formSubmit{
+    border: none;
+    background: mediumslateblue;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+#formSubmit:hover {
+    background-color: #9585f2;
+    cursor: pointer;
+}
+
+#innerForm{
+     padding-top: 15%;
+}
+
+#feedback_message{
+    font-size: 14px;
+    text-wrap: normal;
+    padding-top: 20px;
+    width: 70%;
+}
+
+#feedback_message:hover{
+    cursor: default;
+}

@@ -210,8 +210,8 @@ body{
     padding-top: 5%;
     overflow-y: auto;
     overflow-x: hidden;
-    min-height: 416px;
-    max-height: 416px;
+    min-height: 418px;
+    max-height: 418px;
 }
 
 .already-rated-book{
