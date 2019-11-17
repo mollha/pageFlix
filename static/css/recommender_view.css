@@ -21,7 +21,7 @@ body{
     background: rgba(240,240,240,0.7);
     box-shadow: 0 0 5px 5px rgba(0,0,0,0.2);
     min-width: 60%;
-    margin-top: 20px;
+    margin-top: 5px;
     padding-top: 5%;
 }
 
@@ -78,13 +78,15 @@ body{
 #search-input{
     margin-left: 4%;
     max-width: 90%;
+    min-width: 90%;
+    font-size: 12px;
 }
 
 #book-tip-wrapper{
     background-color: slategrey;
-    margin-top: 20px;
+    margin-top: 5px;
     padding: 5%;
-    min-height: 464px;
+    min-height: 463px;
     box-shadow: 0 0 3px 3px rgba(0,0,0,0.2);
 }
 
@@ -126,7 +128,7 @@ body{
     min-height: 40px;
 }
 
-#refreshIcon:hover, #submit-circle:hover, #searchIcon:hover{
+#refreshIcon:hover, #submit-circle:hover{
     color: grey;
     cursor: pointer;
 }
@@ -214,7 +216,7 @@ body{
     background: rgba(240,240,240,0.7);
     box-shadow: 0 0 5px 5px rgba(0,0,0,0.2);
     min-width: 60%;
-    margin-top: 20px;
+    margin-top: 5px;
     padding-bottom: 5%;
     padding-top: 5%;
     overflow-y: auto;
@@ -237,4 +239,9 @@ body{
     max-height: 180px;
     min-width: 100%;
     margin: 0;
+}
+
+.search-col{
+    width: 90%;
+    margin-left: 5%;
 }

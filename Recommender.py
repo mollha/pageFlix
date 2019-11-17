@@ -62,6 +62,10 @@ class Recommender:
         user_ids = self.ratings['user_id'].tolist()
         return list(set(user_ids))
 
+    def get_all_books(self):
+        book_ids = self.books['book_id'].tolist()
+        return [self.get_book_by_id(x) for x in book_ids]
+
     def get_book_by_id(self, book_id):
         """
         Return the details of the book corresponding to book_id

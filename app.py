@@ -27,6 +27,11 @@ def checkUser():
         return 'True'
     return ''
 
+@app.route('/allbooks', methods=['GET'])
+def allBooks():
+    book_ids = recommender.get_all_books()
+    return jsonify(book_ids)
+
 @app.route('/createuser', methods=['POST'])
 def createUser():
     users = recommender.get_all_users()
@@ -66,25 +71,19 @@ def getRandomBook():
         genres = ', '.join(genres[0:3])
     else:
         genres = ', '.join(genres)
-
-    return jsonify(title=book[3],
-                   year=book[2],
-                   authors=book[1],
-                   genres=genres,
-                   image_path=book[5])
+    return jsonify(title=book[3], year=book[2], authors=book[1], genres=genres, image_path=book[5])
 
 
 @app.route('/getbook', methods=['GET'])
 def get_book():
-    book_title = request.args.get('book_name')
-    # need to get book from its title
-    book_title = 'angels and demons'.title()
-
-    return jsonify(title=book_title,
-                   year='2000',
-                   authors='Dan Brown',
-                   genres='Horror',
-                   image_path='https://images.gr-assets.com/books/1303390735m/960.jpg')
+    book_id = request.args.get('book_id')
+    book = recommender.get_book_by_id(int(book_id))
+    genres = book[6].split('|')
+    if len(genres) > 3:
+        genres = ', '.join(genres[0:3])
+    else:
+        genres = ', '.join(genres)
+    return jsonify(title=book[3], year=book[2], authors=book[1], genres=genres, image_path=book[5])
 
 
 @app.route('/updaterating', methods=['POST'])

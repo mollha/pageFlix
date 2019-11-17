@@ -2,6 +2,11 @@ $(document).ready(function() {
     let current_book = null;
     let rating_box = $('#rating-box');
     let rating_feedback = $('#rating-feedback');
+    let select_box = $('#search-input');
+
+    function reset_selection(){
+        $('#search-input').get(0).selectedIndex = 0;
+    }
 
     function invalid_input(element){
 		element.css("box-shadow", "0 0 10px rgb(255, 0, 0)");
@@ -13,8 +18,46 @@ $(document).ready(function() {
 		rating_feedback.css("color", "green");
     }
 
+    function get_all_books(){
+        // delete all books first
+        $.ajax({
+			type : 'GET',
+			url : '/allbooks',
+			success: function(response){
+			    let html_text = '<option disabled selected value> -- Select a title -- </option>\n';
+			    for (let i = 0; i < response.length; i++) {
+			        html_text += '<option value="' + response[i][0] + '">' + response[i][3] + '</option>'
+                }
+			    console.log(html_text);
+			    document.getElementById('search-input').innerHTML = html_text;
+            }
+		});
+    }
+
+    select_box.on('change', function(event){
+        book_id = select_box.val();
+        $.ajax({
+			type : 'GET',
+			url : '/getbook',
+            data: {
+                book_id: book_id
+            },
+            contenttype: "application/json",
+			success: function(response){
+			    current_book = response;
+			    let year = '<strong>Year: </strong>' + Math.round(parseInt(response.year)).toString();
+			    document.getElementById('title_h1').innerHTML = response.title;
+                document.getElementById('year_p').innerHTML = year;
+                document.getElementById('author_p').innerHTML = '<strong>Author: </strong>' + response.authors;
+                document.getElementById('genre_p').innerHTML = '<strong>Genre: </strong>' + response.genres;
+                $('.img-border .book-img').attr("src", response.image_path);
+            }
+		});
+    });
+
 
     function get_random_book(user_id){
+        reset_selection();
         $.ajax({
 			type : 'GET',
 			url : '/randombook',
@@ -129,4 +172,5 @@ $(document).ready(function() {
     });
 
     get_random_book('1');
+    get_all_books();
 });
