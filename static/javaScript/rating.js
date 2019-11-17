@@ -35,11 +35,15 @@ $(document).ready(function() {
     }
 
     select_box.on('change', function(event){
+        user_id = 0;
         book_id = select_box.val();
+        rating_box.val('');
+        rating_box.css("box-shadow", 'None');
         $.ajax({
 			type : 'GET',
 			url : '/getbook',
             data: {
+			    user_id: user_id,
                 book_id: book_id
             },
             contenttype: "application/json",
@@ -51,7 +55,8 @@ $(document).ready(function() {
                 document.getElementById('author_p').innerHTML = '<strong>Author: </strong>' + response.authors;
                 document.getElementById('genre_p').innerHTML = '<strong>Genre: </strong>' + response.genres;
                 $('.img-border .book-img').attr("src", response.image_path);
-            }
+                document.getElementById('rating-box').val(response.rating);
+			}
 		});
     });
 

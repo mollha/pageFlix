@@ -77,13 +77,20 @@ def getRandomBook():
 @app.route('/getbook', methods=['GET'])
 def get_book():
     book_id = request.args.get('book_id')
+    user_id = request.args.get('user_id')
     book = recommender.get_book_by_id(int(book_id))
+    users_ratings = recommender.get_ratings_by_user(int(user_id))
+    rating = ''
+    for x in users_ratings:
+        if x[0][0] == book_id:
+            rating = str(x[0][1])
+
     genres = book[6].split('|')
     if len(genres) > 3:
         genres = ', '.join(genres[0:3])
     else:
         genres = ', '.join(genres)
-    return jsonify(title=book[3], year=book[2], authors=book[1], genres=genres, image_path=book[5])
+    return jsonify(title=book[3], year=book[2], authors=book[1], genres=genres, image_path=book[5], rating=rating)
 
 
 @app.route('/updaterating', methods=['POST'])
