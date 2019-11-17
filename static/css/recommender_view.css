@@ -168,7 +168,7 @@ body{
 
 #update-rating-title, #already-rated-title{
     text-align: center;
-    margin-top: 40px;
+    margin-top: 25px;
     font-size: 24px;
     width: 95%;
     background-color: rgba(0,0,0,0.4);
