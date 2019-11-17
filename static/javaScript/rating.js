@@ -153,8 +153,6 @@ $(document).ready(function() {
         }
     });
 
-
-
     $('#submit-circle').on('click', function(event) {
         $.ajax({
         data : {
@@ -171,6 +169,7 @@ $(document).ready(function() {
                 document.getElementById('rating-feedback').innerHTML = '';
                 rating_box.css("box-shadow", 'None');
                 rating_box.val('');
+                get_random_book('0');
             }
         }
         });
