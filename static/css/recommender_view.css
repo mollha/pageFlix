@@ -22,7 +22,6 @@ body{
     box-shadow: 0 0 5px 5px rgba(0,0,0,0.2);
     min-width: 60%;
     margin-top: 5px;
-    padding-top: 5%;
 }
 
 #searchWrapper{
@@ -107,7 +106,6 @@ body{
 
 #title_row{
     background-color: rgba(0,0,0,0.7);
-    padding-top: 5%;
     padding-left: 2%;
     padding-right: 2%;
     margin-bottom: 5%;
@@ -244,4 +242,14 @@ body{
 .search-col{
     width: 90%;
     margin-left: 5%;
+}
+
+#avg-rating-p{
+    margin:0;
+    font-weight: bold;
+    color: darkslategrey;
+    padding-top: 1%;
+    font-size: 11px;
+    text-align: right;
+    padding-bottom: 1%;
 }

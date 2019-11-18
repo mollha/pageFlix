@@ -4,6 +4,23 @@ $(document).ready(function() {
     let rating_feedback = $('#rating-feedback');
     let select_box = $('#search-input');
 
+    function render_ratings(response){
+        let avg_rating = Math.round(parseInt(response.avg_rating));
+        const checked_star = '<span class="fa fa-star'+' checked'+'"></span>';
+        const unchecked_star = '<span class="far fa-star"></span>';
+        let html_stars = checked_star.repeat(avg_rating) + unchecked_star.repeat(5 - avg_rating);
+        document.getElementById('avg-rating-p').innerHTML = 'Avg. rating: '
+            + html_stars + ' ' + response.avg_rating;
+
+        current_book = response;
+        let year = '<strong>Year: </strong>' + Math.round(parseInt(response.year)).toString();
+        document.getElementById('title_h1').innerHTML = response.title;
+        document.getElementById('year_p').innerHTML = year;
+        document.getElementById('author_p').innerHTML = '<strong>Author: </strong>' + response.authors;
+        document.getElementById('genre_p').innerHTML = '<strong>Genre: </strong>' + response.genres;
+        $('.img-border .book-img').attr("src", response.image_path);
+    }
+
     function reset_selection(){
         $('#search-input').get(0).selectedIndex = 0;
     }
@@ -28,7 +45,6 @@ $(document).ready(function() {
 			    for (let i = 0; i < response.length; i++) {
 			        html_text += '<option value="' + response[i][0] + '">' + response[i][3] + '</option>'
                 }
-			    console.log(html_text);
 			    document.getElementById('search-input').innerHTML = html_text;
             }
 		});
@@ -48,14 +64,7 @@ $(document).ready(function() {
             },
             contenttype: "application/json",
 			success: function(response){
-			    current_book = response;
-			    let year = '<strong>Year: </strong>' + Math.round(parseInt(response.year)).toString();
-			    document.getElementById('title_h1').innerHTML = response.title;
-                document.getElementById('year_p').innerHTML = year;
-                document.getElementById('author_p').innerHTML = '<strong>Author: </strong>' + response.authors;
-                document.getElementById('genre_p').innerHTML = '<strong>Genre: </strong>' + response.genres;
-                $('.img-border .book-img').attr("src", response.image_path);
-                document.getElementById('rating-box').val(response.rating);
+			    render_ratings(response);
 			}
 		});
     });
@@ -71,13 +80,7 @@ $(document).ready(function() {
             },
             contenttype: "application/json",
 			success: function(response){
-			    current_book = response;
-			    let year = '<strong>Year: </strong>' + Math.round(parseInt(response.year)).toString();
-			    document.getElementById('title_h1').innerHTML = response.title;
-                document.getElementById('year_p').innerHTML = year;
-                document.getElementById('author_p').innerHTML = '<strong>Author: </strong>' + response.authors;
-                document.getElementById('genre_p').innerHTML = '<strong>Genre: </strong>' + response.genres;
-                $('.img-border .book-img').attr("src", response.image_path);
+			    render_ratings(response)
             }
 		});
     }
@@ -98,14 +101,7 @@ $(document).ready(function() {
             },
             contenttype: "application/json",
 			success: function(response){
-			    current_book = response;
-			    let year = 'Year: ' + Math.round(parseInt(response.year)).toString();
-			    document.getElementById('title_h1').innerHTML = response.title;
-                document.getElementById('year_p').innerHTML = year;
-                document.getElementById('author_p').innerHTML = 'Author: ' + response.authors;
-                document.getElementById('genre_p').innerHTML = 'Genre: ' + response.genres;
-                $('.img-border .book-img').attr("src", response.image_path);
-
+			    render_ratings(response)
             }
 		});
     }
@@ -175,6 +171,8 @@ $(document).ready(function() {
         });
     });
 
+
     get_random_book('1');
     get_all_books();
+
 });

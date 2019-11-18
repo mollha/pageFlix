@@ -51,7 +51,7 @@ class Recommender:
         """
         all_book_ratings = self.ratings.loc[self.ratings['book_id'] == book_id]
         if len(all_book_ratings):
-            return round(all_book_ratings['rating'].astype(int).mean(axis=0), 3)
+            return round(all_book_ratings['rating'].astype(int).mean(axis=0), 2)
         return 'N/A'    # return a string which indicates the book has no ratings
 
     def get_all_users(self):
@@ -72,10 +72,13 @@ class Recommender:
         :param book_id: a str representing the book_id of the corresponding book
         :return: list containing book details
         """
+        mean_rating = self.get_mean_rating(book_id)
         # Get the row from the books dataframe corresponding to the book_id
         id_df = self.books.loc[self.books['book_id'] == book_id]
         # Return the first, and only, entry in the list as another list
-        return id_df.values.tolist()[0]
+        new_list = id_df.values.tolist()[0]
+        new_list.append(str(mean_rating))
+        return new_list
 
     def renew_predictions(self):
         all_data = pd.merge(self.ratings, self.books, on='book_id')
