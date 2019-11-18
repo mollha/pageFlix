@@ -4,6 +4,12 @@ $(document).ready(function() {
     let rating_feedback = $('#rating-feedback');
     let select_box = $('#search-input');
 
+    function remove_rating_style(){
+        document.getElementById('rating-feedback').innerHTML = '';
+        rating_box.val('');
+        rating_box.css("box-shadow", 'None');
+    }
+
     function render_ratings(response){
         let avg_rating = Math.round(parseInt(response.avg_rating));
         const checked_star = '<span class="fa fa-star'+' checked'+'"></span>';
@@ -53,8 +59,7 @@ $(document).ready(function() {
     select_box.on('change', function(event){
         user_id = 0;
         book_id = select_box.val();
-        rating_box.val('');
-        rating_box.css("box-shadow", 'None');
+        remove_rating_style();
         $.ajax({
 			type : 'GET',
 			url : '/getbook',
@@ -86,6 +91,7 @@ $(document).ready(function() {
     }
 
     $('#refreshIcon').on('click', function(event){
+        remove_rating_style();
         get_random_book('0');
     });
 
@@ -144,8 +150,7 @@ $(document).ready(function() {
             }
         }
         else{
-            document.getElementById('rating-feedback').innerHTML = '';
-            rating_box.css("box-shadow", 'None');
+            remove_rating_style();
         }
     });
 
@@ -162,9 +167,7 @@ $(document).ready(function() {
                 invalid_input(rating_box);
             }
             else{
-                document.getElementById('rating-feedback').innerHTML = '';
-                rating_box.css("box-shadow", 'None');
-                rating_box.val('');
+                remove_rating_style();
                 get_random_book('0');
             }
         }
