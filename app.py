@@ -53,7 +53,15 @@ def faq():
 
 @app.route('/welcome')
 def view():
-    return render_template('recommendations.html')
+    user_id_str = request.args.get('user')
+    try:
+        user_id = int(user_id_str.strip())
+        all_users = recommender.get_all_users()
+        if user_id in all_users:
+            return render_template('recommendations.html', name=user_id_str)
+        return redirect("/login", code=302)
+    except Exception as e:
+        return redirect("/login", code=302)
 
 # This should do something better with the received data
 @app.route('/process', methods=['POST'])
