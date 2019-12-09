@@ -1,0 +1,11 @@
+connection = sqlite3.connect('book_recommender.db')
+cursor = connection.cursor()
+
+df_books = pd.read_sql_query("SELECT * FROM Books", connection)
+df_ratings = pd.read_sql_query("SELECT * FROM Ratings", connection)
+
+# code
+
+#IMPORTANT VVVVV
+connection.commit() # ACTAULLY MAKES ANY CHANGES HAPPEN
+connection.close() # closes it

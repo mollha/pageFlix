@@ -2,7 +2,9 @@
 
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/recommender_view.css') }}">
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/recommendations.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap">
+
 {% endblock %}
 
 {% block body %}
@@ -12,7 +14,7 @@
             <p id="user-id-box">User 10231</p>
         </div>
         <div class="col-9 col-md-10">
-            <h1 id="dashboard-title">Your Dashboard</h1>
+            <h1 id="dashboard-title">Update and View Recommendations</h1>
         </div>
     </div>
 </div>
@@ -124,13 +126,57 @@
     </div>
 </div>
 
-<div class="row justify-content-center">
-    <a id="formSubmit">Return to ratings</a>
+<div class="main_container container">
+    <div class="row justify-content-center">
+        <div class="main_col col-md-12 col-lg-4 col-xl-6">
+                <p id="recommendations-title">Recommended Titles</p>
+                <div class="scroll-window">
+                    <div id="number_rec_row" class="row justify-content-center">
+                        <div class="col-8 d-flex justify-content-center">
+                            <p>Number of recommendations</p>
+                        </div>
+                        <div class="col-4">
+                            <div class="row">
+                                <p class="label_num">5</p>
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider round"></span>
+                                </label>
+                            <p class="label_num">10</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="already-rated-book">
+                            <p>Book 1</p>
+                        </div>
+                        <div class="already-rated-book">
+                            <p>Book 1</p>
+                        </div>
+                        <div class="already-rated-book">
+                            <p>Book 1</p>
+                        </div>
+                        <div class="already-rated-book">
+                            <p>Book 1</p>
+                        </div>
+                        <div class="already-rated-book">
+                            <p>Book 1</p>
+                        </div>
+                        <div class="already-rated-book">
+                            <p>Book 1</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="main_col d-none d-md-block col-md-12 col-lg-8 col-xl-6">
+                <p id="genres-title">Genres</p>
+                <div class="d-flex" id="svg-holder"></div>
+            </div>
+    </div>
 </div>
-
 {% endblock %}
 
-
 {% block script_links %}
-    <script src="{{ url_for('static', filename='javaScript/rating.js') }}"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="{{ url_for('static', filename='javaScript/recommendations.js') }}"></script>
 {% endblock %}

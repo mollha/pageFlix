@@ -1,0 +1,1 @@
+sqlite> .mode csv

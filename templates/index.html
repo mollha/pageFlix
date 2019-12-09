@@ -2,7 +2,6 @@
 
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
-    <script src="{{ url_for('static', filename='javaScript/index.js') }}"></script>
 {% endblock %}
 
 {% block body %}
@@ -56,4 +55,8 @@
             </div>
     </div>
 </div>
+{% endblock %}
+
+{% block script_links %}
+<script src="{{ url_for('static', filename='javaScript/index.js') }}"></script>
 {% endblock %}

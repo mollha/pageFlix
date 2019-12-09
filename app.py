@@ -1,11 +1,12 @@
 from flask import Flask, render_template, request, jsonify, redirect
 from random import choice
-from Recommender import Recommender
+from RecommenderReset import Recommender
+
+app = Flask(__name__)
 
 # set up application referencing the file
 recommender = Recommender("./Dataset/dataset/cleaner_ratings.csv", "./Dataset/dataset/clean_books.csv")
 print('Finished intializing Recommender\n')
-app = Flask(__name__)
 
 @app.route('/')
 def index():
@@ -15,6 +16,11 @@ def index():
 @app.route('/login')
 def login():
     return render_template('index.html')
+
+# set up recommendations viewing route
+@app.route('/recommendations')
+def recommendations():
+    return render_template('recommendations.html')
 
 @app.route('/signup')
 def signup():
@@ -112,4 +118,4 @@ def update_rating():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, use_reloader=False)

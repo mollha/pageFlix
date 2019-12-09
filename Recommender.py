@@ -1,12 +1,20 @@
 import pandas as pd
+import sqlite3
 from surprise import SVD, Reader, Dataset
+
+# $ pip install numpy
+# $ pip install scikit-surprise
 
 
 class Recommender:
     def __init__(self, ratings_path: str, books_path: str):
-        print('Initializing Recommender...')
+        # connection = sqlite3.connect('databasename.db')
+        # cursor = connection.cursor()
+
         self.ratings = pd.read_csv(ratings_path)
+        # self.ratings = pd.read_sql_query("SELECT * FROM Ratings", connection)
         self.books = pd.read_csv(books_path)
+        # self.books = pd.read_sql_query("SELECT * FROM Books", connection)
         self.predictions = self.renew_predictions()
 
     def update_rating(self, user_id, book_id, rating):
@@ -115,3 +123,4 @@ class Recommender:
 # print predictions
 # for book_id, _ in get_top_n(uid, predictions):
 # #     print(books[books.book_id == book_id]['title'])
+
