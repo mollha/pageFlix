@@ -1,10 +1,13 @@
 import pandas as pd
-import numpy as np
-from scipy.sparse.linalg import svds
+import sqlite3
+from surprise import SVD, Reader, Dataset
+
+# $ pip install numpy
+# $ pip install scikit-surprise
 
 
 class Recommender:
-    def __init__(self, ratings_path, books_path):
+    def __init__(self, ratings_path: str, books_path: str):
         # connection = sqlite3.connect('databasename.db')
         # cursor = connection.cursor()
 
@@ -13,7 +16,7 @@ class Recommender:
         self.books = pd.read_csv(books_path)
         # self.books = pd.read_sql_query("SELECT * FROM Books", connection)
         self.predictions = self.renew_predictions()
-        #print(self.get_predictions_by_user(1, 1))
+
 
     def get_unrated_book(self, user_id: int):
         user_rated_books = self.get_ratings_by_user(user_id)
@@ -23,6 +26,16 @@ class Recommender:
             random_book_id = self.books['book_id'].sample(n=1).tolist()[0]
             if random_book_id not in user_rated_book_ids:
                 return self.get_book_by_id(random_book_id)
+
+
+    def delete_user(self, user_id: str):
+        """
+        Delete a user by removing every rating they have created
+        :param user_id: a str representing the user_id of the user to be removed
+        :return: None
+        """
+        # Modify the ratings dataframe to contain every rating NOT made by user_id
+        self.ratings = self.ratings[self.ratings.user_id != user_id]
 
     def delete_rating(self, user_id: str, book_id: str):
         """
@@ -34,15 +47,6 @@ class Recommender:
         """
         # Modifies the ratings dataframe
         self.ratings = self.ratings[(self.ratings.user_id != user_id) | (self.ratings.book_id != book_id)]
-
-    def delete_user(self, user_id: str):
-        """
-        Delete a user by removing every rating they have created
-        :param user_id: a str representing the user_id of the user to be removed
-        :return: None
-        """
-        # Modify the ratings dataframe to contain every rating NOT made by user_id
-        self.ratings = self.ratings[self.ratings.user_id != user_id]
 
     def get_mean_rating(self, book_id: str):
         """
@@ -67,20 +71,6 @@ class Recommender:
         book_ids = self.books['book_id'].tolist()
         return [self.get_book_by_id(x) for x in book_ids]
 
-    def get_ratings_by_user(self, user_id: int):
-        user_df = self.ratings.loc[self.ratings['user_id'] == user_id].values.tolist()
-        return [(self.get_book_by_id(x[1]), x[2]) for x in user_df]
-
-    # def edit_ratings(self, user_id: int, rating_dict: dict):
-    #     """
-    #     Add new ratings to the dataset
-    #     :param user_id: an int representing the user_id for the new ratings
-    #     :param rating_dict: a dictionary of book_id : rating, allows more than one updates at a time
-    #     :return: NoneType
-    #     """
-    #     for book_id in rating_dict:
-    #         self.dataframe.at[user_id, int(book_id)] = rating_dict[int(book_id)]
-
     def get_book_by_id(self, book_id):
         """
         Return the details of the book corresponding to book_id
@@ -97,27 +87,37 @@ class Recommender:
 
     def renew_predictions(self):
         all_data = pd.merge(self.ratings, self.books, on='book_id')
-        dataframe = all_data.pivot_table(index='user_id', columns='book_id', values='rating').fillna(0)
-        rating_values = dataframe.values
-        user_ratings_mean = np.mean(rating_values, axis=1)
-        r_demeaned = rating_values - user_ratings_mean.reshape(-1, 1)
-        # Singular Value Decomposition on ratings
-        u, sigma, vt = svds(r_demeaned, k=min(r_demeaned.shape) - 1)
-        sigma = np.diag(sigma)
-        all_user_predicted_ratings = np.dot(np.dot(u, sigma), vt) + user_ratings_mean.reshape(-1, 1)
-        return pd.DataFrame(all_user_predicted_ratings, columns=dataframe.columns)
+        reader = Reader(rating_scale=(1, 5))
+        data = Dataset.load_from_df(all_data[['user_id', 'book_id', 'rating']], reader)
+        train_set = data.build_full_trainset()
+        svd = SVD()
+        svd.fit(train_set)
+        test_set = train_set.build_anti_testset()
+        return svd.test(test_set)       # return predictions
 
-    def get_predictions_by_user(self, user_id: int, num_recommendations: int):
-        sorted_user_predictions = self.predictions.iloc[user_id - 1].sort_values(ascending=False)
-        user_data = self.ratings[self.ratings.user_id == user_id]
-        already_rated = (user_data.merge(self.books, how='left', left_on='book_id', right_on='book_id').
-                         sort_values(['rating'], ascending=False))
-        recommendations = (self.books[~self.books['book_id'].isin(already_rated['book_id'])].
-                           merge(pd.DataFrame(sorted_user_predictions).reset_index(), how='left',
-                           left_on='book_id', right_on='book_id'). rename(columns={user_id - 1: 'Predictions'}).
-                           sort_values('Predictions', ascending=False).iloc[:num_recommendations, :-1])
-        return already_rated, recommendations
+    def get_predictions_by_user(self, user_id: int, n=10):
+        top_n = []
+        for uid, iid, true_r, est, _ in self.predictions:
+            if uid == user_id:
+                top_n.append((iid, est))
+        sorted_predictions = sorted(top_n, key=lambda est: est[1], reverse=True)[0:n]
+        return [self.get_book_by_id(b_id) for b_id, _ in sorted_predictions]
+
+    def get_ratings_by_user(self, user_id: int):
+        user_df = self.ratings.loc[self.ratings['user_id'] == user_id].values.tolist()
+        return [(self.get_book_by_id(x[1]), x[2]) for x in user_df]
 
 
-if __name__ == "__main__":
-    recommender = Recommender("./Dataset/dataset/cleaner_ratings.csv", "./Dataset/dataset/clean_books.csv")
+
+
+# if __name__ == '__main__':
+#     r_path, b_path = "./Dataset/dataset/cleaner_ratings.csv", "./Dataset/dataset/clean_books.csv"
+#     new_recommender = Recommender(r_path, b_path)
+#     prediction_values = new_recommender.get_predictions_by_user(1)
+
+    # print(new_recommender.get_ratings_by_user(1))
+
+# print predictions
+# for book_id, _ in get_top_n(uid, predictions):
+# #     print(books[books.book_id == book_id]['title'])
+

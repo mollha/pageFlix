@@ -24,6 +24,7 @@ $(document).ready(function() {
 				else{
 					invalid_input(user_box);
 				}
+				return response;
 			}
 		});
 	}
@@ -46,9 +47,24 @@ $(document).ready(function() {
 			type : 'POST',
 			url : '/process',
 			success: function(response){
-				if(response){
-					window.location.replace("/welcome");
-				}
+				console.log(check_valid_name());
+				$.ajax({
+					data: {
+					userID: user_box.val()
+					},
+					type: 'POST',
+					url: '/checkuser',
+					success: function (response) {
+						if (response) {
+							valid_input(user_box);
+							window.location.replace("/welcome?user=" + user_box.val());
+						}
+						else{
+							invalid_input(user_box);
+						}
+						return response;
+					}
+				});
 			}
 		});
 		// HTML automatically tries to post the form, we therefore manually stop this

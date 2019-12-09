@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify, redirect
 from random import choice
-from RecommenderReset import Recommender
+from Recommender import Recommender
 
 app = Flask(__name__)
 
@@ -17,11 +17,6 @@ def index():
 def login():
     return render_template('index.html')
 
-# set up recommendations viewing route
-@app.route('/recommendations')
-def recommendations():
-    return render_template('recommendations.html')
-
 @app.route('/signup')
 def signup():
     return render_template('signup.html')
@@ -29,9 +24,14 @@ def signup():
 @app.route('/checkuser', methods=['POST'])
 def checkUser():
     user_id = request.form['userID'].strip()
-    if user_id in users:
-        return 'True'
-    return ''
+    try:
+        user_id = int(user_id)
+        all_users = recommender.get_all_users()
+        if user_id in all_users:
+            return 'Success'
+        return ''
+    except ValueError as e:
+        return ''
 
 @app.route('/allbooks', methods=['GET'])
 def allBooks():
@@ -53,7 +53,8 @@ def faq():
 
 @app.route('/welcome')
 def view():
-    return render_template('recommender_view.html')
+    return render_template('recommendations.html')
+
 # This should do something better with the received data
 @app.route('/process', methods=['POST'])
 def process():
@@ -61,7 +62,7 @@ def process():
     if name:
         newName = name[::-1]
         # , jsonify({'name': newName})
-    return render_template("recommender_view.html")
+    return " "
 
 @app.route('/getuser', methods=['GET'])
 def getUser():
@@ -118,4 +119,5 @@ def update_rating():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, use_reloader=False)
+    # app.run(debug=True, use_reloader=False)
+    app.run(debug=True)

@@ -155,7 +155,7 @@ input:checked + .slider:before {
 #genres-title, #recommendations-title{
     text-align: center;
     font-size: 24px;
-    margin-top: 5px;
+    margin-top: 10px;
     width: 100%;
     background-color: #595b75;
     color: white;
