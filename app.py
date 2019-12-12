@@ -2,11 +2,10 @@ from flask import Flask, render_template, request, jsonify, redirect
 from random import choice
 from Recommender import Recommender
 
+print('Intializing Recommender...')
 app = Flask(__name__)
-
-# set up application referencing the file
 recommender = Recommender("./Dataset/dataset/cleaner_ratings.csv", "./Dataset/dataset/clean_books.csv")
-print('Finished intializing Recommender\n')
+print('Complete!\n')
 
 @app.route('/')
 def index():

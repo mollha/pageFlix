@@ -202,10 +202,10 @@ body{
 
 #user-id-box{
     border-radius: 5px;
+    font-weight: bold;
     background-color: mediumslateblue;
     text-align: center;
-    padding-right: 20px;
-    padding-left: 20px;
+    padding: 5px 20px;
     margin-top: 15px;
 }
 

@@ -1,6 +1,6 @@
-$(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function(){
 
-	let user_box = $('#userInput');
+let user_box = $('#userInput');
 
 	function invalid_input(element){
 		element.css("box-shadow", "0 0 10px rgb(255, 0, 0)");

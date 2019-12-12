@@ -4,6 +4,13 @@ $(document).ready(function() {
     let rating_feedback = $('#rating-feedback');
     let select_box = $('#search-input');
 
+
+    function populateUserField(){
+        const urlParams = new URLSearchParams(window.location.search);
+        let user = urlParams.get('user');
+        document.getElementById('user-id-box').innerHTML = 'User '+ user;
+    }
+
     function remove_rating_style(){
         document.getElementById('rating-feedback').innerHTML = '';
         rating_box.val('');
@@ -177,5 +184,6 @@ $(document).ready(function() {
 
     get_random_book('1');
     get_all_books();
+    populateUserField();
 
 });
