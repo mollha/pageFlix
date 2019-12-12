@@ -11,7 +11,7 @@
 <div id="dashboard-id" class="container">
     <div class="row">
         <div class="col-3 col-md-2">
-            <p id="user-id-box">User 10231</p>
+            <p id="user-id-box">User</p>
         </div>
         <div class="col-9 col-md-10">
             <h1 id="dashboard-title">Your Dashboard</h1>
@@ -95,32 +95,21 @@
     </div>
     <div class="main-col col-12 col-md-6">
         <div class="row justify-content-center">
-            <h1 id="already-rated-title">Already Rated</h1>
+            <h1 id="already-rated-title">All Ratings</h1>
         </div>
-        <div class="scroll-window">
-            <div class="row">
-                <div class="already-rated-book">
-                    <p>Book 1</p>
+        <div class="col scroll-window">
+                <div style="min-height: 40px" class="row already-rated-book">
+                    <div class="col-9 d-flex">
+                        <p style="font-weight: bold; font-size: 13px" class="rated-title my-auto">The Fault in Our Stars</p>
+                    </div>
+                    <div class="col-2 d-flex" style="margin: 0; padding:0">
+                        <p style="font-weight:bold; color: #fcba03" class="rated-star my-auto">4<span class="fa fa-star checked" aria-hidden="true"></span></p>
+                    </div>
+                    <div class="col-1 justify-content-center" style="margin: 0; padding:0">
+                        <i class="far fa-trash-alt delete-button"></i>
+                    </div>
                 </div>
-                <div class="already-rated-book">
-                    <p>Book 1</p>
-                </div>
-                <div class="already-rated-book">
-                    <p>Book 1</p>
-                </div>
-                <div class="already-rated-book">
-                    <p>Book 1</p>
-                </div>
-                <div class="already-rated-book">
-                    <p>Book 1</p>
-                </div>
-                <div class="already-rated-book">
-                    <p>Book 1</p>
-                </div>
-                <div class="already-rated-book">
-                    <p>Book 1</p>
-                </div>
-            </div>
+            <p id="no-rating" style="font-size: 12px">This user has not provided any ratings!</p>
         </div>
     </div>
     </div>
@@ -148,7 +137,7 @@
                     </div>
                     <div class="row">
                         <div class="already-rated-book">
-                            <p>Book 1</p>
+                            <p>Book 2</p>
                         </div>
                         <div class="already-rated-book">
                             <p>Book 1</p>

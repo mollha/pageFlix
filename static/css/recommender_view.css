@@ -228,7 +228,21 @@ body{
     box-shadow: 0 0 2px 2px rgba(0,0,0,0.05);
     min-width: 80%;
     margin: 1% auto;
-    background:linear-gradient(to bottom, white 0%, whitesmoke 100%);
+    align-items: center!important;
+    background:linear-gradient(to bottom, white 0%, lightgrey 100%);
+}
+.already-rated-book:hover{
+    background:linear-gradient(to bottom, white 80%, whitesmoke 100%);
+    cursor: pointer;
+}
+
+.delete-button{
+    color: #8c0000;
+    font-weight: bold;
+}
+
+.delete-button:hover{
+    color: #ab0000;
 }
 
 #special-book-row{
@@ -252,3 +266,4 @@ body{
     text-align: right;
     padding-bottom: 1%;
 }
+
