@@ -71,6 +71,12 @@ def process():
         # , jsonify({'name': newName})
     return " "
 
+@app.route('/getalluserratings', methods=['GET'])
+def getUserRatings():
+    user_id = request.args.get('user_id')  # get user id as string
+    users_ratings = recommender.get_ratings_by_user(int(user_id))
+    return jsonify(users_ratings)
+
 @app.route('/getuser', methods=['GET'])
 def getUser():
     users = recommender.get_all_users()
@@ -91,9 +97,9 @@ def getRandomBook():
 
 @app.route('/getbook', methods=['GET'])
 def get_book():
-    book_id = request.args.get('book_id')
-    user_id = request.args.get('user_id')
-    book = recommender.get_book_by_id(int(book_id))
+    book_id = request.args.get('book_id')   # get book id as string
+    user_id = request.args.get('user_id')   # get user id as string
+    book = recommender.get_book_by_id(int(book_id))    # get book details from id
     avg_rating = '{:<04}'.format(book[7])
     users_ratings = recommender.get_ratings_by_user(int(user_id))
     rating = ''
@@ -109,6 +115,13 @@ def get_book():
     return jsonify(title=book[3], year=book[2], authors=book[1],
                    genres=genres, image_path=book[5], avg_rating=avg_rating, rating=rating)
 
+
+@app.route('/deleterating', methods=['POST'])
+def delete_rating():
+    book_id = request.args.get('book_id')  # get book id as string
+    user_id = request.args.get('user_id')  # get user id as string
+    recommender.delete_rating(user_id, book_id)
+    return ''
 
 @app.route('/updaterating', methods=['POST'])
 def update_rating():
