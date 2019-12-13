@@ -12,9 +12,8 @@ class Recommender:
 
         self.ratings = pd.read_sql_query("SELECT * FROM Ratings", connection)
         self.books = pd.read_sql_query("SELECT * FROM Books", connection)
-
+        self.users = self.ratings['user_id'].astype(int)
         self.predictions = self.renew_predictions()
-        #print(self.get_predictions_by_user(1, 1))
 
     def get_unrated_book(self, user_id: int):
         user_rated_books = self.get_ratings_by_user(user_id)
@@ -24,20 +23,6 @@ class Recommender:
             random_book_id = self.books['book_id'].sample(n=1).tolist()[0]
             if random_book_id not in user_rated_book_ids:
                 return self.get_book_by_id(random_book_id)
-
-    def get_random_id(self) -> str:
-
-        def verify_new(new_id: int) -> bool:
-            self.get_ratings_by_user(new_id)
-            pass
-
-        def generate(k: int) -> str:
-            output = []
-            while k < len(output):
-                random_num = randint(0, 10)
-                output.append(str(random_num))
-            return "".join(output)
-
 
     def delete_rating(self, user_id: str, book_id: str):
         """
@@ -71,12 +56,13 @@ class Recommender:
             return round(all_book_ratings['rating'].astype(int).mean(axis=0), 2)
         return 'N/A'    # return a string which indicates the book has no ratings
 
+
     def get_all_users(self):
         """
         Gets a list containing the user_ids of every user by extracting unique user_ids from ratings
         :return: a list containing all existing user_ids
         """
-        user_ids = self.ratings['user_id'].tolist()
+        user_ids = self.users.tolist()
         return list(set(user_ids))
 
     def get_all_books(self):
@@ -87,8 +73,17 @@ class Recommender:
         user_df = self.ratings.loc[self.ratings['user_id'] == user_id].values.tolist()
         return [(self.get_book_by_id(x[1]), x[2]) for x in user_df]
 
-    def check_user(self):
-        pass
+    def get_new_user_id(self):
+        # random k
+        def generate() -> int:
+            return randint(0, 99999)
+
+        while True:
+            new_id = generate()
+            if new_id not in self.users:
+                return new_id
+
+
 
     # def edit_ratings(self, user_id: int, rating_dict: dict):
     #     """

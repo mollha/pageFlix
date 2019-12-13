@@ -9,6 +9,7 @@ print('Complete!\n')
 
 @app.route('/')
 def index():
+    recommender.get_new_user_id()
     return redirect('/login')
 
 # set up index route
@@ -37,14 +38,18 @@ def allBooks():
     book_ids = recommender.get_all_books()
     return jsonify(book_ids)
 
-@app.route('/createuser', methods=['POST'])
-def createUser():
-    users = recommender.get_all_users()
-    userID = request.form['userID'].strip()
-    if userID in users:
-        return 'False'
-    users.append(userID)
-    return 'True'
+# @app.route('/createuser', methods=['POST'])
+# def createUser():
+#     users = recommender.get_all_users()
+#     userID = request.form['userID'].strip()
+#     if userID in users:
+#         return 'False'
+#     users.append(userID)
+#     return 'True'
+
+@app.route('/getnewid', methods=['GET'])
+def getNewUserName():
+    return str(recommender.get_new_user_id())
 
 @app.route('/faq')
 def faq():
