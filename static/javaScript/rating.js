@@ -45,14 +45,13 @@ $(document).ready(function() {
     }
 
 
-    function refresh_recommendations(){
-        $('#recommendations-window').innerHTML = '';
-        $.ajax({
+    function refresh_recommendations(number){
+        document.getElementById("add-recommendations").innerHTML = '';        $.ajax({
 			type : 'GET',
 			url : '/getpredictions',
             data: {
 			    user_id: user,
-                number: 5 // initially, now need to get toggle value of how many recommendations to retrieve
+                number: number // initially, now need to get toggle value of how many recommendations to retrieve
             },
             contenttype: "application/json",
 			success: function(response){
@@ -65,7 +64,7 @@ $(document).ready(function() {
                         let parsed_genres = parseGenres(book_genres);
 
                         let component = createRecommenderComponent((i + 1).toString(), book_title, parsed_genres);
-                        document.getElementById("recommendations-window").appendChild(component);
+                        document.getElementById("add-recommendations").appendChild(component);
                     }
                         const buttons = document.querySelectorAll(".delete-button");
                         for (let button of buttons) {
@@ -81,7 +80,7 @@ $(document).ready(function() {
 			}
 		});
     }
-    refresh_recommendations();
+    refresh_recommendations(5);
 
     function createRatingComponent(rating_val, title, book_id){
         let my_div = document.createElement("div");
@@ -382,13 +381,13 @@ $(document).ready(function() {
     $('.slider').on('click', function(){
         if(this.getAttribute("data-check") === "on"){
             this.setAttribute("data-check", "off");
-            // 10 recommendations
-            alert('unchecking');    // this works
+            // 5 recommendations
+            refresh_recommendations(5);
         }
         else{
             this.setAttribute("data-check", "on");
-            // 5 recommendations
-            alert('checking');      // this works
+            // 10 recommendations
+            refresh_recommendations(10);
         }
     });
 
