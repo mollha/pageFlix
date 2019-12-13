@@ -99,6 +99,7 @@
         </div>
         <div id="ratings-window" class="col scroll-window">
             <p id="no-rating" style="font-size: 12px">This user has not provided any ratings!</p>
+
         </div>
     </div>
     </div>
@@ -108,7 +109,7 @@
     <div class="row justify-content-center">
         <div class="main_col col-md-12 col-lg-4 col-xl-6">
                 <p id="recommendations-title">Recommended Titles</p>
-                <div class="scroll-window">
+                <div id="recommendations-window" class="scroll-window">
                     <div id="number_rec_row" class="row justify-content-center">
                         <div class="col-8 d-flex justify-content-center">
                             <p>Number of recommendations</p>
@@ -117,14 +118,23 @@
                             <div class="row">
                                 <p class="label_num">5</p>
                                 <label class="switch">
-                                    <input type="checkbox">
-                                    <span class="slider round"></span>
+                                    <input id="toggle_switch" type="checkbox">
+                                    <span data-check="off" class="slider round"></span>
                                 </label>
                             <p class="label_num">10</p>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row recommended-item-title" style="min-height: 40px;">
+                        <div class="col-1 d-flex justify-content-center" style="margin: 0px; padding: 0px;">
+                            <p class="my-auto" style="font-weight: bold; font-size: 13px; text-align: center"></p>
+                        </div>
+                        <div class="col-6 d-flex">
+                            <p class="rated-title my-auto" style="font-weight: bold; font-size: 13px;">TITLE</p>
+                        </div>
+                        <div class="col-5 d-flex">
+                            <p class="rated-title my-auto" style="font-weight: bold; font-size: 13px;">GENRES</p>
+                        </div>
                     </div>
                 </div>
             </div>

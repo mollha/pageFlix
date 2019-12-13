@@ -103,9 +103,10 @@ def get_book():
     avg_rating = '{:<04}'.format(book[7])
     users_ratings = recommender.get_ratings_by_user(int(user_id))
     rating = ''
+
     for x in users_ratings:
-        if x[0][0] == book_id:
-            rating = str(x[0][1])
+        if str(x[0][0]) == book_id:
+            rating = str(x[1])
 
     genres = book[6].split('|')
     if len(genres) > 3:
@@ -114,6 +115,13 @@ def get_book():
         genres = ', '.join(genres)
     return jsonify(title=book[3], year=book[2], authors=book[1],
                    genres=genres, image_path=book[5], avg_rating=avg_rating, rating=rating)
+
+@app.route('/getpredictions', methods=['GET'])
+def get_predictions():
+    user_id = request.args.get('user_id')  # get user id as string
+    number = request.args.get('number')
+    _, predictions = recommender.get_predictions_by_user(int(user_id), int(number))
+    return jsonify(predictions)
 
 
 @app.route('/deleterating', methods=['POST'])

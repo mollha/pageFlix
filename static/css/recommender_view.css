@@ -222,7 +222,7 @@ body{
     max-height: 461px;
 }
 
-.already-rated-book{
+.already-rated-book, .recommended-item, .recommended-item-title{
     background: rgba(240,240,240,0.7);
     border-radius: 5px;
     box-shadow: 0 0 2px 2px rgba(0,0,0,0.05);
@@ -231,6 +231,16 @@ body{
     align-items: center!important;
     background:linear-gradient(to bottom, white 0%, lightgrey 100%);
 }
+
+.recommended-item-title{
+    background-color: white;
+    box-shadow: none;
+}
+
+.recommended-item{
+    background:linear-gradient(to bottom, white 0%, whitesmoke 10%);
+}
+
 .already-rated-book:hover{
     background:linear-gradient(to bottom, white 80%, whitesmoke 100%);
     cursor: pointer;

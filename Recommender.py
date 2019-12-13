@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from random import randint
 from scipy.sparse.linalg import svds
 
 
@@ -24,6 +25,20 @@ class Recommender:
             if random_book_id not in user_rated_book_ids:
                 return self.get_book_by_id(random_book_id)
 
+    def get_random_id(self) -> str:
+
+        def verify_new(new_id: int) -> bool:
+            self.get_ratings_by_user(new_id)
+            pass
+
+        def generate(k: int) -> str:
+            output = []
+            while k < len(output):
+                random_num = randint(0, 10)
+                output.append(str(random_num))
+            return "".join(output)
+
+
     def delete_rating(self, user_id: str, book_id: str):
         """
         Deletes a rating given the book_id and the user_id of the user who gave it
@@ -34,6 +49,7 @@ class Recommender:
         """
         # Modifies the ratings dataframe
         self.ratings = self.ratings[(self.ratings.user_id != user_id) | (self.ratings.book_id != book_id)]
+        self.predictions = self.renew_predictions()
 
     def delete_user(self, user_id: str):
         """
@@ -70,6 +86,9 @@ class Recommender:
     def get_ratings_by_user(self, user_id: int):
         user_df = self.ratings.loc[self.ratings['user_id'] == user_id].values.tolist()
         return [(self.get_book_by_id(x[1]), x[2]) for x in user_df]
+
+    def check_user(self):
+        pass
 
     # def edit_ratings(self, user_id: int, rating_dict: dict):
     #     """
@@ -116,7 +135,7 @@ class Recommender:
                            merge(pd.DataFrame(sorted_user_predictions).reset_index(), how='left',
                            left_on='book_id', right_on='book_id'). rename(columns={user_id - 1: 'Predictions'}).
                            sort_values('Predictions', ascending=False).iloc[:num_recommendations, :-1])
-        return already_rated, recommendations
+        return already_rated, recommendations.values.tolist()
 
 
 if __name__ == "__main__":

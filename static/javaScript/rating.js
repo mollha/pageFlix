@@ -6,6 +6,83 @@ $(document).ready(function() {
     const urlParams = new URLSearchParams(window.location.search);
     let user = urlParams.get('user');
 
+    function createRecommenderComponent(position, title, genres){
+        let div1 = document.createElement("div");
+        div1.style = "min-height: 52px";
+        div1.className = "row recommended-item";
+
+        let div2 = document.createElement("div");
+        div2.className = "col-1 d-flex justify-content-center";
+        div2.style = "margin: 0px; padding: 0px;";
+
+        let div2_p = document.createElement("p");
+        div2_p.style = "text-align: center";
+        div2_p.className = "my-auto";
+        div2_p.innerHTML = position + '.';
+        div2.appendChild(div2_p);
+        div1.appendChild(div2);
+
+        let div3 = document.createElement("div");
+        div3.className = "col-6 d-flex";
+
+        let div3_p = document.createElement("p");
+        div3_p.style = "font-weight: bold; font-size: 13px;";
+        div3_p.className = "rated-title my-auto";
+        div3_p.innerHTML = title;
+        div3.appendChild(div3_p);
+        div1.appendChild(div3);
+
+        let div4 = document.createElement("div");
+        div4.className = "col-5 d-flex";
+
+        let div4_p = document.createElement("p");
+        div4_p.style = "font-weight: bold; font-size: 13px;";
+        div4_p.className = "rated-title my-auto";
+        div4_p.innerHTML = genres;
+        div4.appendChild(div4_p);
+        div1.appendChild(div4);
+        return div1;
+    }
+
+
+    function refresh_recommendations(){
+        $('#recommendations-window').innerHTML = '';
+        $.ajax({
+			type : 'GET',
+			url : '/getpredictions',
+            data: {
+			    user_id: user,
+                number: 5 // initially, now need to get toggle value of how many recommendations to retrieve
+            },
+            contenttype: "application/json",
+			success: function(response){
+			    // render ratings
+                console.log(response);
+                if(response){
+                    for(let i = 0; i < response.length; i ++){
+                        let book_title = response[i][3];
+                        let book_genres = response[i][6];   // need to do something with genres
+                        let parsed_genres = parseGenres(book_genres);
+
+                        let component = createRecommenderComponent((i + 1).toString(), book_title, parsed_genres);
+                        document.getElementById("recommendations-window").appendChild(component);
+                    }
+                        const buttons = document.querySelectorAll(".delete-button");
+                        for (let button of buttons) {
+                            button.addEventListener('click', initiateRatingDelete);
+                        }
+
+                        const current_ratings = document.querySelectorAll(".already-rated-book");
+                        for (let current of current_ratings) {
+                            current.addEventListener('click', openBookRating);
+                        }
+			    }
+
+			}
+		});
+    }
+    refresh_recommendations();
+
     function createRatingComponent(rating_val, title, book_id){
         let my_div = document.createElement("div");
         my_div.setAttribute("data-book", book_id);
@@ -62,7 +139,8 @@ $(document).ready(function() {
         });
     };
 
-    function openBookRating(user_id, book_id){
+    let openBookRating = function(){
+        let book_id = this.getAttribute("data-book");
         $.ajax({
 			type : 'GET',
 			url : '/getbook',
@@ -75,7 +153,7 @@ $(document).ready(function() {
 			    render_ratings(response);
 			}
 		});
-    }
+    };
 
 
     function populateAlreadyRated(user_id){
@@ -99,6 +177,11 @@ $(document).ready(function() {
                         for (let button of buttons) {
                             button.addEventListener('click', initiateRatingDelete);
                         }
+
+                        const current_ratings = document.querySelectorAll(".already-rated-book");
+                        for (let current of current_ratings) {
+                            current.addEventListener('click', openBookRating);
+                        }
 			    }
 			    else{
 			        document.getElementById('no-rating').innerHTML = 'This user has not provided any ratings!';
@@ -118,6 +201,17 @@ $(document).ready(function() {
         rating_box.css("box-shadow", 'None');
     }
 
+    function parseGenres(string_val){
+        let genres = string_val.split("|");
+        if(genres.length > 3){
+            genres = genres.slice(0, 3).join(", ");
+        }
+        else{
+            genres = genres.join(", ");
+        }
+        return genres;
+    }
+
     function render_ratings(response){
         let avg_rating = Math.round(parseInt(response.avg_rating));
         const checked_star = '<span class="fa fa-star'+' checked'+'"></span>';
@@ -132,7 +226,8 @@ $(document).ready(function() {
         document.getElementById('year_p').innerHTML = year;
         document.getElementById('author_p').innerHTML = '<strong>Author: </strong>' + response.authors;
         document.getElementById('genre_p').innerHTML = '<strong>Genre: </strong>' + response.genres;
-        document.getElementById('rating-box').innerHTML = response.rating;
+        if(response.rating){
+            document.getElementById('rating-box').value = parseInt(response.rating);}
         $('.img-border .book-img').attr("src", response.image_path);
     }
 
@@ -178,8 +273,6 @@ $(document).ready(function() {
             },
             contenttype: "application/json",
 			success: function(response){
-			    console.log('interesting...');
-			    console.log(response);
 			    render_ratings(response);
 			}
 		});
@@ -203,7 +296,7 @@ $(document).ready(function() {
 
     $('#refreshIcon').on('click', function(event){
         remove_rating_style();
-        get_random_book('0');
+        get_random_book(user);
     });
 
 
@@ -227,11 +320,6 @@ $(document).ready(function() {
     $('.img-border').on('click', function(event) {
         let input = this.parentNode.parentNode.parentNode.querySelector('#input_row input');
         input.focus();
-	});
-
-     $('.already-rated-book').on('click', function(event) {
-         console.log('hi');
-         openBookRating(this.parentNode.getAttribute("data-book"), user);
 	});
 
 
@@ -291,9 +379,24 @@ $(document).ready(function() {
         });
     });
 
+    $('.slider').on('click', function(){
+        if(this.getAttribute("data-check") === "on"){
+            this.setAttribute("data-check", "off");
+            // 10 recommendations
+            alert('unchecking');    // this works
+        }
+        else{
+            this.setAttribute("data-check", "on");
+            // 5 recommendations
+            alert('checking');      // this works
+        }
+    });
+
     get_random_book('1');
     get_all_books();
     populateUserField(user);
+
+
 
 
 });
