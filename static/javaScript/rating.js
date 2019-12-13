@@ -76,8 +76,6 @@ $(document).ready(function() {
 
         slice.transition().duration(1000)
             .attrTween("d", function(d) {
-                console.log('yeet2');
-                console.log(d.data);
                 this._current = this._current || d;
                 let interpolate = d3.interpolate(this._current, d);
                 this._current = interpolate(0);
@@ -97,6 +95,7 @@ $(document).ready(function() {
         text.enter()
             .append("text")
             .attr("dy", ".35em")
+            .style("font-size", "11px")
             .text(function(d) {
                 return d.data.label;
             });
@@ -303,6 +302,7 @@ $(document).ready(function() {
     };
 
     let openBookRating = function(){
+        reset_selection();
         let book_id = this.getAttribute("data-book");
         $.ajax({
 			type : 'GET',
@@ -372,6 +372,11 @@ $(document).ready(function() {
         return genres;
     }
 
+    function reset_selection(){
+        $('#search-input').get(0).selectedIndex = 0;
+    }
+
+
     function render_ratings(response){
         let avg_rating = Math.round(parseInt(response.avg_rating));
         const checked_star = '<span class="fa fa-star'+' checked'+'"></span>';
@@ -389,10 +394,6 @@ $(document).ready(function() {
         if(response.rating){
             document.getElementById('rating-box').value = parseInt(response.rating);}
         $('.img-border .book-img').attr("src", response.image_path);
-    }
-
-    function reset_selection(){
-        $('#search-input').get(0).selectedIndex = 0;
     }
 
     function invalid_input(element){

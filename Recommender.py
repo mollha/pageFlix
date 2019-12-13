@@ -8,7 +8,7 @@ import sqlite3
 class Recommender:
     def __init__(self):
         connection = sqlite3.connect('Data.db')
-        cursor = connection.cursor()
+        # cursor = connection.cursor()
 
         self.ratings = pd.read_sql_query("SELECT * FROM Ratings", connection)
         self.books = pd.read_sql_query("SELECT * FROM Books", connection)

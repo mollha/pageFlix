@@ -92,7 +92,7 @@ def getRandomBook():
         genres = ', '.join(genres[0:3])
     else:
         genres = ', '.join(genres)
-    return jsonify(title=book[3], year=book[2], authors=book[1], genres=genres, image_path=book[5], avg_rating=avg_rating)
+    return jsonify(id=book[0], title=book[3], year=book[2], authors=book[1], genres=genres, image_path=book[5], avg_rating=avg_rating)
 
 
 @app.route('/getbook', methods=['GET'])
