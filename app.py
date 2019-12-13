@@ -4,7 +4,7 @@ from Recommender import Recommender
 
 print('Intializing Recommender...')
 app = Flask(__name__)
-recommender = Recommender("./Dataset/dataset/cleaner_ratings.csv", "./Dataset/dataset/clean_books.csv")
+recommender = Recommender()
 print('Complete!\n')
 
 @app.route('/')

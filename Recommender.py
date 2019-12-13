@@ -2,17 +2,17 @@ import pandas as pd
 import numpy as np
 from random import randint
 from scipy.sparse.linalg import svds
+import sqlite3
 
 
 class Recommender:
-    def __init__(self, ratings_path, books_path):
-        # connection = sqlite3.connect('databasename.db')
-        # cursor = connection.cursor()
+    def __init__(self):
+        connection = sqlite3.connect('Data.db')
+        cursor = connection.cursor()
 
-        self.ratings = pd.read_csv(ratings_path)
-        # self.ratings = pd.read_sql_query("SELECT * FROM Ratings", connection)
-        self.books = pd.read_csv(books_path)
-        # self.books = pd.read_sql_query("SELECT * FROM Books", connection)
+        self.ratings = pd.read_sql_query("SELECT * FROM Ratings", connection)
+        self.books = pd.read_sql_query("SELECT * FROM Books", connection)
+
         self.predictions = self.renew_predictions()
         #print(self.get_predictions_by_user(1, 1))
 
@@ -139,4 +139,4 @@ class Recommender:
 
 
 if __name__ == "__main__":
-    recommender = Recommender("./Dataset/dataset/cleaner_ratings.csv", "./Dataset/dataset/clean_books.csv")
+    recommender = Recommender()

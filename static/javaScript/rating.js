@@ -1,4 +1,163 @@
 $(document).ready(function() {
+
+    let colors = ["#98abc5", "#ccff99", "#7b6888", "#87f1ff", "#b300b3", "#c76be8", "#3cff26",
+    "#3f95a1", "#ff4252", "#5e7c80", "#ff9442", "#ff99ff", "#6fbd84", "#ffd1de", "#98abc5", "#ccff99", "#7b6888", "#87f1ff", "#b300b3", "#c76be8", "#3cff26",
+    "#3f95a1", "#ff4252", "#5e7c80", "#ff9442", "#ff99ff", "#6fbd84", "#ffd1de"];
+
+    function count_occurrences(genres){
+            let unique_genres = [];
+            let genre_count = [];
+            for(let genre in genres){
+                genre = genres[genre];
+                if(unique_genres.includes(genre)){
+                    const index = unique_genres.indexOf(genre);
+                    genre_count[index].value = ((genres.length * genre_count[index].value) + 1) / genres.length;
+                }
+                else{
+                    unique_genres.push(genre);
+                    genre_count.push({label: genre, value: 1 / genres.length});
+                }
+            }
+            return genre_count;
+        }
+
+    let main_svg = d3.select("#svg-holder")
+        .append("svg")
+        .attr("class", "main_svg d-flex justify-content-center");
+
+    let svg = main_svg
+        .append("g")
+        .attr("class", "svg_group");
+
+    svg.append("g")
+        .attr("class", "slices");
+    svg.append("g")
+        .attr("class", "labels");
+    svg.append("g")
+        .attr("class", "lines");
+
+
+    let width = 600,
+        height = 450,
+        radius = Math.min(width, height) / 3.5;
+    main_svg.attr("width", width);
+    main_svg.attr("height", height);
+
+    let pie = d3.pie()
+        .sort(null)
+        .value(function(d) {
+        return d.value;
+    });
+
+    let arc = d3.arc()
+        .outerRadius(radius * 0.8)
+        .innerRadius(radius * 0.4);
+
+    let outerArc = d3.arc()
+        .innerRadius(radius * 0.9)
+        .outerRadius(radius * 0.9);
+
+    svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+    let key = function(d){
+        return d.data.label;};
+
+    function change(data) {
+        /* ------- PIE SLICES -------*/
+        let slice = svg.select(".slices").selectAll("path.slice")
+            .data(pie(data), function(d){
+                return d.data.label;});
+
+        slice.enter()
+            .insert("path")
+            .style("fill", function(d, i) {
+                return colors[i]; })
+            .attr("class", "slice");
+
+        slice.transition().duration(1000)
+            .attrTween("d", function(d) {
+                console.log('yeet2');
+                console.log(d.data);
+                this._current = this._current || d;
+                let interpolate = d3.interpolate(this._current, d);
+                this._current = interpolate(0);
+                return function(t) {
+                    return arc(interpolate(t));
+                };
+            });
+
+        slice.exit()
+            .remove();
+
+        /* ------- TEXT LABELS -------*/
+
+        let text = svg.select(".labels").selectAll("text")
+            .data(pie(data), key);
+
+        text.enter()
+            .append("text")
+            .attr("dy", ".35em")
+            .text(function(d) {
+                return d.data.label;
+            });
+
+        function midAngle(d){
+            return d.startAngle + (d.endAngle - d.startAngle)/2;
+        }
+
+        text.transition().duration(1000)
+            .attrTween("transform", function(d) {
+                this._current = this._current || d;
+                let interpolate = d3.interpolate(this._current, d);
+                this._current = interpolate(0);
+                return function(t) {
+                    let d2 = interpolate(t);
+                    let pos = outerArc.centroid(d2);
+                    pos[0] = radius * (midAngle(d2) < Math.PI ? 1 : -1);
+                    return "translate("+ pos +")";
+                };
+            })
+            .styleTween("text-anchor", function(d){
+                this._current = this._current || d;
+                let interpolate = d3.interpolate(this._current, d);
+                this._current = interpolate(0);
+                return function(t) {
+                    let d2 = interpolate(t);
+                    return midAngle(d2) < Math.PI ? "start":"end";
+                };
+            });
+
+        text.exit()
+            .remove();
+
+        /* ------- SLICE TO TEXT POLYLINES -------*/
+        let polyline = svg.select(".lines").selectAll("polyline")
+            .data(pie(data), key);
+
+        polyline.enter()
+            .append("polyline")
+            .attr("fill", "none")
+            .attr("stroke", "black");
+
+        polyline.transition().duration(1000)
+            .attrTween("points", function(d){
+                this._current = this._current || d;
+                let interpolate = d3.interpolate(this._current, d);
+                this._current = interpolate(0);
+                return function(t) {
+                    let d2 = interpolate(t);
+                    let pos = outerArc.centroid(d2);
+                    pos[0] = radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
+                    return [arc.centroid(d2), outerArc.centroid(d2), pos];
+                };
+            });
+
+        polyline.exit()
+            .remove();
+    }
+
+
+    // ---------------------------------------------------------------------------------------
     let current_book = null;
     let rating_box = $('#rating-box');
     let rating_feedback = $('#rating-feedback');
@@ -46,7 +205,8 @@ $(document).ready(function() {
 
 
     function refresh_recommendations(number){
-        document.getElementById("add-recommendations").innerHTML = '';        $.ajax({
+        document.getElementById("add-recommendations").innerHTML = '';
+        $.ajax({
 			type : 'GET',
 			url : '/getpredictions',
             data: {
@@ -56,31 +216,35 @@ $(document).ready(function() {
             contenttype: "application/json",
 			success: function(response){
 			    // render ratings
-                console.log(response);
+                let genre_array = [];
                 if(response){
                     for(let i = 0; i < response.length; i ++){
                         let book_title = response[i][3];
                         let book_genres = response[i][6];   // need to do something with genres
-                        let parsed_genres = parseGenres(book_genres);
+                        // do something with non-parsed genres
 
-                        let component = createRecommenderComponent((i + 1).toString(), book_title, parsed_genres);
+                        let parsed_genres = parseGenres(book_genres);
+                        genre_array = genre_array.concat(parsed_genres);
+                        change(count_occurrences(genre_array));
+                        let component = createRecommenderComponent((i + 1).toString(), book_title, parsed_genres.join(", "));
                         document.getElementById("add-recommendations").appendChild(component);
                     }
-                        const buttons = document.querySelectorAll(".delete-button");
-                        for (let button of buttons) {
-                            button.addEventListener('click', initiateRatingDelete);
-                        }
 
-                        const current_ratings = document.querySelectorAll(".already-rated-book");
-                        for (let current of current_ratings) {
-                            current.addEventListener('click', openBookRating);
-                        }
+                    const buttons = document.querySelectorAll(".delete-button");
+                    for (let button of buttons) {
+                        button.addEventListener('click', initiateRatingDelete);
+                    }
+
+                    const current_ratings = document.querySelectorAll(".already-rated-book");
+                    for (let current of current_ratings) {
+                        current.addEventListener('click', openBookRating);
+                    }
 			    }
-
+                return genre_array;
 			}
 		});
     }
-    refresh_recommendations(5);
+
 
     function createRatingComponent(rating_val, title, book_id){
         let my_div = document.createElement("div");
@@ -203,10 +367,7 @@ $(document).ready(function() {
     function parseGenres(string_val){
         let genres = string_val.split("|");
         if(genres.length > 3){
-            genres = genres.slice(0, 3).join(", ");
-        }
-        else{
-            genres = genres.join(", ");
+            genres = genres.slice(0, 3);
         }
         return genres;
     }
@@ -321,18 +482,6 @@ $(document).ready(function() {
         input.focus();
 	});
 
-
-
-    // $('#refreshIcon').on('click', function(event){
-    //     rating_box.css("box-shadow", 'None');
-    //     document.getElementById('rating-feedback').innerHTML = '';
-    //     // Need to get a new book
-    //     // [author, year, title...
-    //     rating_box.val('');
-    //     get_book('');
-    // });
-
-
     rating_box.on('change', function(event){
         // validate
         let val = rating_box.val();
@@ -394,8 +543,5 @@ $(document).ready(function() {
     get_random_book('1');
     get_all_books();
     populateUserField(user);
-
-
-
-
+    refresh_recommendations(5);
 });
