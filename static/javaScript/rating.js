@@ -297,7 +297,15 @@ $(document).ready(function() {
             // remove now from position
             document.getElementById('rating-box').value = '';
             populateAlreadyRated(user);
-        }
+            if($('.slider').attr("data-check") === "off"){
+            // 5 recommendations
+            refresh_recommendations(5);
+            }
+            else{
+                // 10 recommendations
+                refresh_recommendations(10);
+            }
+            }
         });
     };
 
@@ -527,9 +535,16 @@ $(document).ready(function() {
             }
             else{
                 populateAlreadyRated(user);
-                alert('pup');
                 remove_rating_style();
                 get_random_book(user);
+                if($('.slider').attr("data-check") === "off"){
+                // 5 recommendations
+                refresh_recommendations(5);
+                }
+                else{
+                    // 10 recommendations
+                    refresh_recommendations(10);
+                }
             }
         }
         });

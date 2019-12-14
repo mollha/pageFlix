@@ -13,6 +13,8 @@ class Recommender:
         self.ratings = pd.read_sql_query("SELECT * FROM Ratings", connection)
         self.books = pd.read_sql_query("SELECT * FROM Books", connection)
         self.users = self.ratings['user_id'].astype(int)
+        self.users.drop_duplicates(keep="first", inplace=True)
+        print(self.users.head(200))
         self.predictions = self.renew_predictions()
 
     def get_unrated_book(self, user_id: int):
@@ -41,9 +43,8 @@ class Recommender:
         """
         # I believe this works
         self.ratings = self.ratings[(self.ratings.user_id != user_id) | (self.ratings.book_id != book_id)]
-        self.predictions = self.renew_predictions()
 
-    def delete_user(self, user_id: str):
+    def delete_user(self, user_id: int):
         """
         Delete a user by removing every rating they have created
         :param user_id: a str representing the user_id of the user to be removed
@@ -51,6 +52,7 @@ class Recommender:
         """
         # Modify the ratings dataframe to contain every rating NOT made by user_id
         self.ratings = self.ratings[self.ratings.user_id != user_id]
+        self.users = self.users[self.users.user_id != user_id]
 
     def get_mean_rating(self, book_id: str):
         """
@@ -94,15 +96,14 @@ class Recommender:
         self.users = self.users.append(new_row, ignore_index=False)
         print(self.users)
 
-    # def edit_ratings(self, user_id: int, rating_dict: dict):
-    #     """
-    #     Add new ratings to the dataset
-    #     :param user_id: an int representing the user_id for the new ratings
-    #     :param rating_dict: a dictionary of book_id : rating, allows more than one updates at a time
-    #     :return: NoneType
-    #     """
-    #     for book_id in rating_dict:
-    #         self.dataframe.at[user_id, int(book_id)] = rating_dict[int(book_id)]
+    def update_rating(self, user_id: int, book_id: int, rating: int):
+        # first, delete the old rating
+        self.delete_rating(user_id, book_id)
+        print(self.get_ratings_by_user(user_id))
+        df = pd.DataFrame({"user_id": user_id, "book_id": book_id, "rating": rating}, index=[0])
+        self.ratings = self.ratings.append(df, ignore_index=True)
+        print(self.get_ratings_by_user(user_id))
+
 
     def get_book_by_id(self, book_id):
         """
@@ -131,6 +132,8 @@ class Recommender:
         return pd.DataFrame(all_user_predicted_ratings, columns=dataframe.columns)
 
     def get_predictions_by_user(self, user_id: int, num_recommendations: int):
+        self.predictions = self.renew_predictions()
+        # THIS DOES NOT WORK
         sorted_user_predictions = self.predictions.iloc[user_id - 1].sort_values(ascending=False)
         user_data = self.ratings[self.ratings.user_id == user_id]
         already_rated = (user_data.merge(self.books, how='left', left_on='book_id', right_on='book_id').

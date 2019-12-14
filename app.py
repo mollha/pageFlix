@@ -109,8 +109,8 @@ def update_rating():
     """
     # TODO will need editing for full functionality
     rating = request.form['rating']
-    book_id = request.args.get('book_id')  # get book id as string
-    user_id = request.args.get('user_id')  # get user id as string
+    book_id = request.form['book_id']  # get book id as string
+    user_id = request.form['user_id']  # get user id as string
     try:
         rating = int(rating)
     except ValueError:
@@ -118,6 +118,7 @@ def update_rating():
 
     if rating > 5 or rating < 1:
         return 'Rating must be a number from 1 to 5'
+    recommender.update_rating(int(user_id), int(book_id), rating)
     return ''
 
 # ------------------------------ CONFIGURE GET REQUEST ENDPOINTS ---------------------------
@@ -148,6 +149,7 @@ def get_user_ratings():
     """
     user_id = request.args.get('user_id')  # get user id as string
     users_ratings = recommender.get_ratings_by_user(int(user_id))
+    users_ratings.sort(key=lambda x: x[0][3])
     return jsonify(users_ratings)
 
 
