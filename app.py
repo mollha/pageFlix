@@ -216,4 +216,4 @@ def get_predictions():
 if __name__ == "__main__":
     # app.run(debug=True, use_reloader=False)
     # TODO disable reloader on submission
-    app.run(debug=True)
+    app.run(debug=False)
