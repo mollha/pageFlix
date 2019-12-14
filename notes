@@ -12,3 +12,4 @@ connection.close() # closes it
 
 
 When the user has no ratings, the top rated books are recommended
+This was developed and tested in Chrome - please use this browser for testing due to its up-to-date abilities
