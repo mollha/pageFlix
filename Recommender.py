@@ -83,7 +83,10 @@ class Recommender:
             if new_id not in self.users:
                 return new_id
 
-
+    def create_user(self, user_id: int):
+        new_row = pd.Series(data={'user_id': user_id})
+        self.users = self.users.append(new_row, ignore_index=False)
+        print(self.users)
 
     # def edit_ratings(self, user_id: int, rating_dict: dict):
     #     """
