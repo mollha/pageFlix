@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, redirect, json
+from flask import Flask, render_template, request, jsonify, redirect
 from random import choice
 from Recommender import Recommender
 
@@ -63,10 +63,10 @@ def check_user():
         user_id = int(user_id)
         all_users = recommender.get_all_users()
         if user_id in all_users:        # if the user id is valid, return True
-            return json.dumps(True)
-        return json.dumps(False)        # if the user id is not valid, return False
+            return 'True'
+        return ''       # if the user id is not valid, return False
     except ValueError:
-        return json.dumps(False)        # return False if there is a ValueError
+        return ''        # return False if there is a ValueError
 
 
 @app.route('/createuser', methods=['POST'])
