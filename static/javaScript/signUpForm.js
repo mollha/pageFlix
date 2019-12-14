@@ -9,7 +9,9 @@ document.addEventListener('DOMContentLoaded', function(){
 			type : 'POST',
 			url : '/createuser',
 			success: function(){
-				window.location.replace("/welcome?user=" + user_id);
+				setTimeout(function () {
+					window.location.replace("/welcome?user=" + user_id);
+					}, 5000);
             }
 		});
 	});

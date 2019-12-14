@@ -77,6 +77,7 @@ def create_user():
     """
     user_id = request.form['user_id'].strip()
     recommender.create_user(int(user_id))
+    recommender.get_all_users()
     return ''
 
 
