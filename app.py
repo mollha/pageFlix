@@ -42,6 +42,7 @@ def view():
     :return: Render welcome page / dashboard
     """
     user_id_str = request.args.get('user')
+    print(user_id_str)
     try:
         user_id = int(user_id_str.strip())
         all_users = recommender.get_all_users()
