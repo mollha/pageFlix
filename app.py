@@ -42,12 +42,11 @@ def view():
     :return: Render welcome page / dashboard
     """
     user_id_str = request.args.get('user')
-    print(user_id_str)
     try:
         user_id = int(user_id_str.strip())
         all_users = recommender.get_all_users()
         if user_id in all_users:        # render user dashboard if a valid user id is provided
-            return render_template('recommendations.html', name=user_id_str)
+            return render_template('recommendations.html', user=user_id_str)
         return redirect("/")       # if user id is invalid, redirect to the login page
     except AttributeError:
         return redirect("/")       # if no user id is provided, redirect to the login page
@@ -78,7 +77,6 @@ def create_user():
     """
     user_id = request.form['user_id'].strip()
     recommender.create_user(int(user_id))
-    recommender.get_all_users()
     return user_id
 
 
@@ -100,7 +98,6 @@ def update_rating():
     Submit an updated rating for a previously rated book, or a new rating for an unrated book
     :return:
     """
-    # TODO will need editing for full functionality
     rating = request.form['rating']
     book_id = request.form['book_id']  # get book id as string
     user_id = request.form['user_id']  # get user id as string
@@ -218,4 +215,4 @@ def get_predictions():
 if __name__ == "__main__":
     # app.run(debug=True, use_reloader=False)
     # TODO disable reloader on submission
-    app.run(debug=False)
+    app.run(debug=True)
