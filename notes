@@ -9,3 +9,6 @@ df_ratings = pd.read_sql_query("SELECT * FROM Ratings", connection)
 #IMPORTANT VVVVV
 connection.commit() # ACTAULLY MAKES ANY CHANGES HAPPEN
 connection.close() # closes it
+
+
+When the user has no ratings, the top rated books are recommended
