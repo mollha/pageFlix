@@ -10,7 +10,7 @@ class Recommender:
         """
         Initialise the recommender using the provided database
         """
-        connection = sqlite3.connect('Data.db')
+        connection = sqlite3.connect('Dataset.db')
         self.ratings = pd.read_sql_query("SELECT * FROM Ratings", connection)
         self.books = pd.read_sql_query("SELECT * FROM Books", connection)
         self.users = self.ratings['user_id'].astype(int)

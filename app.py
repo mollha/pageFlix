@@ -162,8 +162,6 @@ def get_random_book():
     """
     user_id = request.args.get('user_id')
     book = recommender.get_unrated_book(int(user_id))
-    # TODO, need to deal with the eventuality where all books have been rated
-    # I believe I have dealt with this in the recommender, however, need to test
     avg_rating = '{:<04}'.format(book[7])
     genres = book[6].split('|')
     if len(genres) > 3:
@@ -205,7 +203,6 @@ def get_predictions():
     Get either 5 or 10 user-specific predictions
     :return:
     """
-    # TODO, see what happens to the predictions when all books rated
     user_id = request.args.get('user_id')  # get user id as string
     number = request.args.get('number')  # get number of requested predictions
     _, predictions = recommender.get_predictions_by_user(int(user_id), int(number))

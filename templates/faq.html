@@ -6,8 +6,117 @@
 
 {% block body %}
 <div class="main-wrap container d-flex justify-content-center">
-    <div class="row d-flex justify-content-center">
-        <p>heeeey</p>
+    <div class="col">
+        <div class="row d-flex justify-content-center">
+            <h1>FAQs</h1>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <strong>Three steps to success...</strong>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <ol>
+                <li>Login as a new or existing user</li>
+                <li>Customise book ratings in the dashboard</li>
+                <li>View your personalised recommendations</li>
+            </ol>
+        </div>
+        <div class="row">
+            <p>How can I <strong>log in</strong> as an existing user?</p>
+        </div>
+        <div class="row">
+            <ul>
+                <li>Head to the PageFlix home page, by selecting the logo in the navigation bar or by visiting the '/' route</li>
+                <li>Enter a user id in the input box, or select the refresh icon to generate a random valid user id</li>
+                <li>If the box is glowing green, this indicates that the user id is valid. However, if it glows red, this is an invalid id.</li>
+                <li>Once the box is glowing green, click the submit button to login as the specified user</li>
+            </ul>
+        </div>
+        <div class="row">
+            <p>How can I <strong>sign up</strong> as a new user?</p>
+        </div>
+        <div class="row">
+            <ul>
+                <li>Head to the PageFlix sign up page, by selecting the 'Sign Up' link in the navigation bar</li>
+                <li>A valid new user id is already provided in the grey box</li>
+                <li>To continue as this user, click the continue button</li>
+                <li>Ta Da! This new user now exists and is ready to provide recommendations</li>
+            </ul>
+        </div>
+        <div class="row">
+            <p><strong>Where</strong> can I <strong>submit ratings</strong> and see my <strong>recommendations</strong>?</p>
+        </div>
+        <div class="row">
+            <ul>
+                <li>After logging in, or signing up, you will be redirected to your dashboard</li>
+                <li>Here, you can update and view your ratings</li>
+                <li>Scrolling to the bottom of the page, you will also be able to view your recommendations</li>
+                <li>There is also a pie chart, showing the breakdown of genres in your recommendations!</li>
+            </ul>
+        </div>
+        <div class="row">
+            <p>How can <strong>view my ratings</strong>?</p>
+        </div>
+        <div class="row">
+            <ul>
+                <li>Your previous ratings are visible in the dashboard (top right corner under 'All Ratings')</li>
+                <li>Here, you can view the score you provided for each rated title</li>
+                <li>You can also delete these ratings by selecting the trash can</li>
+            </ul>
+        </div>
+        <div class="row">
+            <p>How can I <strong>submit</strong> new ratings?</p>
+        </div>
+        <div class="row">
+            <ul>
+                <li>You can add ratings in the dashboard, under 'Update Rating'</li>
+                <li>Select a title from the list of titles, or click the refresh icon to randomly select an unrated title</li>
+                <li>Enter a rating into the input box (between 1 and 5 inclusive)</li>
+                <li>Press the up arrow icon to submit this rating</li>
+                <li>This rating should now appear to the right, in the list of all ratings</li>
+            </ul>
+        </div>
+        <div class="row">
+            <p>How can I <strong>update</strong> an old rating?</p>
+        </div>
+        <div class="row">
+            <ul>
+                <li>You can update ratings in the dashboard</li>
+                <li>Select a rating from the list of all ratings, or select a title from the list of titles</li>
+                <li>This will open the book in the update rating window</li>
+                <li>You can then edit this rating by entering a new value, and submit the rating by pressing the up arrow icon</li>
+                <li>The updated rating should now appear to the right, in the list of all ratings!</li>
+            </ul>
+        </div>
+        <div class="row">
+            <p>Can I <strong>delete</strong> a rating?</p>
+        </div>
+        <div class="row">
+            <ul>
+                <li>In your dashboard, view the list of previously rated titles</li>
+                <li>Select the trash can, next to the rating you wish to delete</li>
+                <li>Voila! Your old rating is gone!</li>
+            </ul>
+        </div>
+        <div class="row">
+            <p>How can I <strong>change the number of recommendations</strong> visible to me?</p>
+        </div>
+        <div class="row">
+            <ul>
+                <li>In your dashboard, scroll to the bottom of the page to the list of recommended titles</li>
+                <li>Select the toggle button (number of recommendations)</li>
+                <li>This will toggle the number of recommendations between 5 and 10</li>
+                <li>This will also update the genre breakdown accordingly!</li>
+            </ul>
+        </div>
+        <div class="row">
+            <p>What happens if I <strong>have not rated any titles</strong>?</p>
+        </div>
+        <div class="row">
+            <ul>
+                <li>If no ratings have been provided, the titles with the highest average ratings are recommended</li>
+            </ul>
+        </div>
+        </div>
     </div>
 </div>
 {% endblock %}
