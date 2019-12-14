@@ -41,30 +41,20 @@ let user_box = $('#userInput');
 	// When the user ID form is submitted, POST input to /process and if the user ID exists, redirect to welcome page
 	$('#form').on('submit', function(event) {
 		$.ajax({
-			data : {
-				name : user_box.val(),
+			data: {
+			userID: user_box.val()
 			},
-			type : 'POST',
-			url : '/process',
-			success: function(response){
-				console.log(check_valid_name());
-				$.ajax({
-					data: {
-					userID: user_box.val()
-					},
-					type: 'POST',
-					url: '/checkuser',
-					success: function (response) {
-						if (response) {
-							valid_input(user_box);
-							window.location.replace("/welcome?user=" + user_box.val());
-						}
-						else{
-							invalid_input(user_box);
-						}
-						return response;
-					}
-				});
+			type: 'POST',
+			url: '/checkuser',
+			success: function (response) {
+				if (response) {
+					valid_input(user_box);
+					window.location.replace("/welcome?user=" + user_box.val());
+				}
+				else{
+					invalid_input(user_box);
+				}
+				return response;
 			}
 		});
 		// HTML automatically tries to post the form, we therefore manually stop this

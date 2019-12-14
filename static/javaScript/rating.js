@@ -285,7 +285,6 @@ $(document).ready(function() {
     let initiateRatingDelete = function(){
         // delete rating
         let book_id = this.getAttribute("data-book");
-        // $('#central-modal').modal('show');
         // delete rating
         $.ajax({
         data : {
@@ -294,9 +293,10 @@ $(document).ready(function() {
         },
         type : 'POST',
         url : '/deleterating',
-        success: function(response){
+        success: function(){
             // remove now from position
             $('.already-rated-book[data-book="' + book_id + '"]').remove();
+            document.getElementById('rating-box').value = '';
         }
         });
     };
@@ -387,7 +387,9 @@ $(document).ready(function() {
 
         current_book = response;
         let year = '<strong>Year: </strong>' + Math.round(parseInt(response.year)).toString();
-        document.getElementById('title_h1').innerHTML = response.title;
+        let title_box = document.getElementById('title_h1');
+        title_box.setAttribute("data-id", response.id);
+        title_box.innerHTML = response.title;
         document.getElementById('year_p').innerHTML = year;
         document.getElementById('author_p').innerHTML = '<strong>Author: </strong>' + response.authors;
         document.getElementById('genre_p').innerHTML = '<strong>Genre: </strong>' + response.genres;
@@ -421,15 +423,14 @@ $(document).ready(function() {
 		});
     }
 
-    select_box.on('change', function(event){
-        user_id = 0;
+    select_box.on('change', function(){
         book_id = select_box.val();
         remove_rating_style();
         $.ajax({
 			type : 'GET',
 			url : '/getbook',
             data: {
-			    user_id: user_id,
+			    user_id: user,
                 book_id: book_id
             },
             contenttype: "application/json",
@@ -509,20 +510,26 @@ $(document).ready(function() {
     });
 
     $('#submit-circle').on('click', function(event) {
+        let title_box = document.getElementById('title_h1');
         $.ajax({
         data : {
+            user_id: user,
+            book_id: title_box.getAttribute("data-id"),
             rating : rating_box.val()
         },
         type : 'POST',
         url : '/updaterating',
         success: function(response){
             if(response){
+                // If we get a non-empty response, rating value was invalid
                 document.getElementById('rating-feedback').innerHTML = response;
                 invalid_input(rating_box);
             }
             else{
+                populateAlreadyRated(user);
+                alert('pup');
                 remove_rating_style();
-                get_random_book('0');
+                get_random_book(user);
             }
         }
         });

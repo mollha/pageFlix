@@ -16,15 +16,22 @@ class Recommender:
         self.predictions = self.renew_predictions()
 
     def get_unrated_book(self, user_id: int):
+        """
+        Get a book that the user has not rated, unless they have rated all books, then we return a previously rated book
+        :param user_id: int representing the user id
+        :return:
+        """
         user_rated_books = self.get_ratings_by_user(user_id)
         user_rated_book_ids = [x[0][0] for x in user_rated_books]
 
+        count = 0
         while True:
             random_book_id = self.books['book_id'].sample(n=1).tolist()[0]
-            if random_book_id not in user_rated_book_ids:
+            if (random_book_id not in user_rated_book_ids) or count >= len(self.books.index):
                 return self.get_book_by_id(random_book_id)
+            count += 1
 
-    def delete_rating(self, user_id: str, book_id: str):
+    def delete_rating(self, user_id: int, book_id: int):
         """
         Deletes a rating given the book_id and the user_id of the user who gave it
         Searches for all rows that do not contain the rating
@@ -32,7 +39,7 @@ class Recommender:
         :param book_id: str representing the book_id of the rated book
         :return: None
         """
-        # Modifies the ratings dataframe
+        # I believe this works
         self.ratings = self.ratings[(self.ratings.user_id != user_id) | (self.ratings.book_id != book_id)]
         self.predictions = self.renew_predictions()
 
@@ -55,7 +62,6 @@ class Recommender:
         if len(all_book_ratings):
             return round(all_book_ratings['rating'].astype(int).mean(axis=0), 2)
         return 'N/A'    # return a string which indicates the book has no ratings
-
 
     def get_all_users(self):
         """

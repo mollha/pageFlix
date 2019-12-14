@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function(){
         	},
 			type : 'POST',
 			url : '/createuser',
-			success: function(response){
+			success: function(){
 				window.location.replace("/welcome?user=" + user_id);
             }
 		});

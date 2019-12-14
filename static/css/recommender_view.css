@@ -241,6 +241,10 @@ body{
     background:linear-gradient(to bottom, white 0%, whitesmoke 10%);
 }
 
+#recommendations-window:hover{
+    cursor: default;
+}
+
 .already-rated-book:hover{
     background:linear-gradient(to bottom, white 80%, whitesmoke 100%);
     cursor: pointer;
