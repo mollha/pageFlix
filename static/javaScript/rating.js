@@ -295,8 +295,8 @@ $(document).ready(function() {
         url : '/deleterating',
         success: function(){
             // remove now from position
-            $('.already-rated-book[data-book="' + book_id + '"]').remove();
             document.getElementById('rating-box').value = '';
+            populateAlreadyRated(user);
         }
         });
     };
@@ -328,7 +328,7 @@ $(document).ready(function() {
 			    user_id: user_id,
             },
 			success: function(response){
-			    if(response){
+			    if(response.length > 0){
                     for(let i = 0; i < response.length; i ++){
                         let book_id = response[i][0][0];
                         let book_rating = response[i][1];   // might need to use ParseInt
@@ -347,7 +347,7 @@ $(document).ready(function() {
                         }
 			    }
 			    else{
-			        document.getElementById('no-rating').innerHTML = 'This user has not provided any ratings!';
+			        document.getElementById('ratings-window').innerHTML = '<p style="font-size: 11px; margin-top: 10px; text-align: center">This user has no ratings!</p>';
                 }
             }
 		});
