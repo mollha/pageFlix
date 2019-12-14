@@ -8,10 +8,8 @@ document.addEventListener('DOMContentLoaded', function(){
         	},
 			type : 'POST',
 			url : '/createuser',
-			success: function(){
-				setTimeout(function () {
-					window.location.replace("/welcome?user=" + user_id);
-					}, 5000);
+			success: function(response){
+				window.location.replace("/welcome?user=" + response);
             }
 		});
 	});
