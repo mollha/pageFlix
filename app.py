@@ -9,15 +9,6 @@ print('Complete!\n')
 
 # -------------------------------- CONFIGURE TEMPLATE ROUTES -------------------------------
 @app.route('/')
-def index():
-    """
-    Redirect to the login page when accessing main route
-    :return: Redirect to login page
-    """
-    return redirect('/login')
-
-
-@app.route('/login')
 def login():
     """
     Configure route to login / home page - from here you can log in as an existing user
@@ -56,9 +47,9 @@ def view():
         all_users = recommender.get_all_users()
         if user_id in all_users:        # render user dashboard if a valid user id is provided
             return render_template('recommendations.html', name=user_id_str)
-        return redirect("/login")       # if user id is invalid, redirect to the login page
+        return redirect("/")       # if user id is invalid, redirect to the login page
     except AttributeError:
-        return redirect("/login")       # if no user id is provided, redirect to the login page
+        return redirect("/")       # if no user id is provided, redirect to the login page
 
 # ------------------------------ CONFIGURE POST REQUEST ENDPOINTS ---------------------------
 @app.route('/checkuser', methods=['POST'])
